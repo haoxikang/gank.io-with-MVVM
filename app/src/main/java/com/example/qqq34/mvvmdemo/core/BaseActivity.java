@@ -10,26 +10,44 @@ import android.view.View;
 
 import com.example.qqq34.mvvmdemo.callback.BaseActivityCallback;
 
+import java.io.Serializable;
+
 
 /**
  * Created by qqq34 on 2016/11/24.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseActivityCallback{
+public abstract class BaseActivity extends AppCompatActivity implements BaseActivityCallback,BaseView {
+    public static final String KEY_VIEW_MODEL = "BaseActivity.viewmodel";
     private View view;
+    private BaseObservable baseObservable;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            baseObservable = (BaseObservable) savedInstanceState.get(KEY_VIEW_MODEL);
+        }
         initBinding();
-        initData();
+        if (baseObservable != null) {
+            initOldData(baseObservable);
+        } else {
+            initData();
+        }
+
         attachViewModel();
         initToolbar(savedInstanceState);
         initView(savedInstanceState);
-        if (getPresenter()!=null) getPresenter().setCallback(this);
+        if (getPresenter() != null) getPresenter().setCallback(this);
         view = findViewById(android.R.id.content);
         initListeners();
-        if (getPresenter()!=null) getPresenter().onPresenterCreate();
+        if (getPresenter() != null) {
+            getPresenter().onPresenterCreate(baseObservable == null);
+        }
     }
+
+    protected abstract void initBinding();
+
 
     @Override
     protected void onDestroy() {
@@ -37,24 +55,32 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
         super.onDestroy();
     }
 
-    public abstract void initBinding();
-    public abstract void initView(@Nullable Bundle savedInstanceState);
+
+
     protected abstract void initToolbar(Bundle savedInstanceState);
-    protected abstract   void initListeners();
-    protected abstract void initData();
-    public abstract IPresenter getPresenter();
-    public abstract BaseObservable getViewModel();
-    public void attachViewModel(){
-        if (getPresenter() != null && getViewModel() != null) getPresenter().attachViewModel(getViewModel());
+
+
+
+    public void attachViewModel() {
+        if (getPresenter() != null && getViewModel() != null)
+            getPresenter().attachViewModel(getViewModel());
     }
 
     @Override
     public void onShowSnackBar(String s) {
-        Snackbar.make(view,s,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, s, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onStartActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (getViewModel() != null) {
+            outState.putSerializable(KEY_VIEW_MODEL, (Serializable) getViewModel());
+        }
+        super.onSaveInstanceState(outState);
     }
 }

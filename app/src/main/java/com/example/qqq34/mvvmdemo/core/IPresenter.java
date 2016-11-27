@@ -11,7 +11,7 @@ import com.example.qqq34.mvvmdemo.callback.BaseActivityCallback;
  */
 
 public interface IPresenter<V extends BaseObservable> {
-     void onPresenterCreate();
+     void onPresenterCreate(boolean isNewCreate);
     void attachViewModel(V viewModel);
     void detachViewModel();
     boolean isViewModelAttached();

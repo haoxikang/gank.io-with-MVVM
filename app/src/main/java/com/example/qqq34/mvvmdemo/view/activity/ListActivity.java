@@ -42,7 +42,7 @@ public class ListActivity extends BaseActivity {
     }
 
     @Override
-    protected void initListeners() {
+    public void initListeners() {
         toolbar.setNavigationOnClickListener(view -> finish());
     }
     @Override
@@ -55,12 +55,18 @@ public class ListActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
+    public void initOldData(BaseObservable baseObservable) {
+
         for (int i=0;i<50;i++){
             mItemViewModels.add(new ItemViewModel(i+"dididididi"));
         }
         mAdapter = new SingleTypeAdapter<>(this,R.layout.view_item);
         mViewModel = new ListViewModel(mItemViewModels,"liebiao",mAdapter,new LinearLayoutManager(this));
+
+    }
+
+    @Override
+    public void initData() {
 
     }
 

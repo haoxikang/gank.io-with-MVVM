@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -8,11 +7,11 @@
 
         <variable
             name="mainViewModel"
-            type="com.example.qqq34.mvvmdemo.viewmodel.MainViewModel"/>
+            type="com.example.qqq34.mvvmdemo.viewmodel.MainViewModel" />
 
         <variable
             name="viewClick"
-            type="com.example.qqq34.mvvmdemo.callback.ViewClickCallback"/>
+            type="com.example.qqq34.mvvmdemo.callback.ViewClickCallback" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -32,13 +31,14 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:fitsSystemWindows="true"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -49,7 +49,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:onClick="@{viewClick::onClick}"
-                android:text="跳转按钮"/>
+                android:text="@{mainViewModel.buttonname}" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></android.support.v4.view.ViewPager>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -63,8 +69,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/image_home"
@@ -76,7 +81,7 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_home_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==0?@color/colorPrimary:@color/SecondaryText}"/>
+                        android:tint="@{mainViewModel.currentSelecte==0?@color/colorPrimary:@color/SecondaryText}" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/image_android"
@@ -88,7 +93,7 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_android_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==1?@color/colorPrimary:@color/SecondaryText}"/>
+                        android:tint="@{mainViewModel.currentSelecte==1?@color/colorPrimary:@color/SecondaryText}" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/image_ios"
@@ -100,7 +105,7 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_ios_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==2?@color/colorPrimary:@color/SecondaryText}"/>
+                        android:tint="@{mainViewModel.currentSelecte==2?@color/colorPrimary:@color/SecondaryText}" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/image_web"
@@ -112,7 +117,7 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_important_devices_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==3?@color/colorPrimary:@color/SecondaryText}"/>
+                        android:tint="@{mainViewModel.currentSelecte==3?@color/colorPrimary:@color/SecondaryText}" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/image_fuli"
@@ -124,9 +129,9 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_card_giftcard_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==4?@color/colorPrimary:@color/SecondaryText}"/>
+                        android:tint="@{mainViewModel.currentSelecte==4?@color/colorPrimary:@color/SecondaryText}" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
