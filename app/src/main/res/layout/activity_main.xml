@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mainViewModel"
+            type="com.example.qqq34.mvvmdemo.viewmodel.MainViewModel"/>
+
+        <variable
+            name="viewClick"
+            type="com.example.qqq34.mvvmdemo.callback.ViewClickCallback"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.activity.MainActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fitsSystemWindows="true"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:onClick="@{viewClick::onClick}"
+                android:text="跳转按钮"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_home"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_home_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==0?@color/colorPrimary:@color/SecondaryText}"/>
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_android"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_android_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==1?@color/colorPrimary:@color/SecondaryText}"/>
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_ios"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_ios_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==2?@color/colorPrimary:@color/SecondaryText}"/>
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_web"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_important_devices_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==3?@color/colorPrimary:@color/SecondaryText}"/>
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_fuli"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_card_giftcard_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==4?@color/colorPrimary:@color/SecondaryText}"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
