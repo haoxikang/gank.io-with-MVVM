@@ -14,9 +14,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
 public class HttpMethods
 {
-    public static final String BASE_URL = "https://api.douban.com/v2/movie/";
+    public static final String BASE_URL = "https://gank.io/api/";
     private static final int DEFAULT_TIMEOUT = 5;
-    private MovieService movieService;
+    private GankService gankService;
     private Retrofit retrofit;
 
     private HttpMethods()
@@ -24,7 +24,7 @@ public class HttpMethods
         OkHttpClient.Builder localBuilder = new OkHttpClient.Builder();
         localBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit = new Retrofit.Builder().client(localBuilder.build()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).baseUrl(BASE_URL).build();
-        movieService = (retrofit.create(MovieService.class));
+        gankService = (retrofit.create(GankService.class));
     }
 
     public static HttpMethods getInstance()
@@ -32,9 +32,9 @@ public class HttpMethods
         return SingletonHolder.INSTANCE;
     }
 
-    public MovieService getMovieService()
+    public GankService getGankService()
     {
-        return movieService;
+        return gankService;
     }
 
     private static class SingletonHolder

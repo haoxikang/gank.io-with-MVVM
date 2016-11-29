@@ -91,4 +91,12 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+        Log.d("tag","可见");
+        }
+    }
 }

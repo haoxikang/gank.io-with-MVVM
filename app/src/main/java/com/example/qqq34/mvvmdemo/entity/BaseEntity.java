@@ -5,26 +5,18 @@ package com.example.qqq34.mvvmdemo.entity;
  */
 public class BaseEntity
 {
-    private int resultCode=0;
-    private String resultMessage;
 
-    public int getResultCode()
-    {
-        return this.resultCode;
+    /**
+     * error : false
+     */
+
+    private boolean error;
+
+    public boolean isError() {
+        return error;
     }
 
-    public String getResultMessage()
-    {
-        return this.resultMessage;
-    }
-
-    public void setResultCode(int code)
-    {
-        this.resultCode = code;
-    }
-
-    public void setResultMessage(String message)
-    {
-        this.resultMessage = message;
+    public void setError(boolean error) {
+        this.error = error;
     }
 }

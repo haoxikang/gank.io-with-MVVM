@@ -16,6 +16,7 @@
 package com.example.qqq34.mvvmdemo.network.converter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.example.qqq34.mvvmdemo.entity.BaseEntity;
@@ -39,16 +40,13 @@ final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     @Override
     public T convert(ResponseBody value) throws IOException {
         String body = value.string();
+        Log.d("GSON",body);
         BaseEntity baseEntity= gson.fromJson(body,BaseEntity.class);
         try {
-            if (baseEntity.getResultCode()==0){
+            if (!baseEntity.isError()){
                 return adapter.fromJson(body);
             }else {
-                if (TextUtils.isEmpty(baseEntity.getResultMessage())) {
-                    throw new ResultException(baseEntity.getResultCode()+"", TextUtils.isEmpty(baseEntity.getResultMessage()) ? "数据异常" : baseEntity.getResultMessage());
-                } else {
-                    throw new ResultException(baseEntity.getResultCode()+"", baseEntity.getResultMessage());
-                }
+                    throw new ResultException("1", "数据加载失败");
             }
         } finally {
             value.close();
