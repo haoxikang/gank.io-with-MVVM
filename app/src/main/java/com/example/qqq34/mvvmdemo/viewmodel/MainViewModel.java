@@ -13,19 +13,9 @@ import java.io.Serializable;
 
 public class MainViewModel extends BaseObservable implements Serializable{
     private int currentSelecte = 0;
-    private String buttonname = "跳转按钮";
 
     public MainViewModel(int currentSelecte) {
         this.currentSelecte = currentSelecte;
-    }
-    @Bindable
-    public String getButtonname() {
-        return buttonname;
-    }
-
-    public void setButtonname(String buttonname) {
-        this.buttonname = buttonname;
-        notifyPropertyChanged(BR.buttonname);
     }
 
     @Bindable

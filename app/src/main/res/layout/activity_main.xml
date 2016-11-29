@@ -42,20 +42,12 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:onClick="@{viewClick::onClick}"
-                android:text="@{mainViewModel.buttonname}" />
 
-            <android.support.v4.view.ViewPager
+            <com.example.qqq34.mvvmdemo.view.widget.NoScrollViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></android.support.v4.view.ViewPager>
+                android:layout_weight="1"></com.example.qqq34.mvvmdemo.view.widget.NoScrollViewPager>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -130,6 +122,17 @@
                         android:scaleType="center"
                         android:src="@mipmap/ic_card_giftcard_black_24dp"
                         android:tint="@{mainViewModel.currentSelecte==4?@color/colorPrimary:@color/SecondaryText}" />
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/image_setting"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/selecte_bk"
+                        android:onClick="@{viewClick::onClick}"
+                        android:scaleType="center"
+                        android:src="@mipmap/ic_card_giftcard_black_24dp"
+                        android:tint="@{mainViewModel.currentSelecte==5?@color/colorPrimary:@color/SecondaryText}" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

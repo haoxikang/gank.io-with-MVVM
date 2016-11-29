@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+        <variable
+            name="layoutmanager"
+            type="android.support.v7.widget.LinearLayoutManager"/>
         <variable
             name="viewmodel"
             type="com.example.qqq34.mvvmdemo.viewmodel.HomeViewModel"/>
     </data>
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:text="@{viewmodel.name}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        app:adapter="@{adapter}"
+        app:layoutManager="@{layoutmanager}"
+        android:id="@+id/home_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </layout>

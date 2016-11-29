@@ -23,6 +23,7 @@ import com.example.qqq34.mvvmdemo.view.fragment.AndroidFragment;
 import com.example.qqq34.mvvmdemo.view.fragment.FuliFragment;
 import com.example.qqq34.mvvmdemo.view.fragment.HomeFragment;
 import com.example.qqq34.mvvmdemo.view.fragment.IOSFragment;
+import com.example.qqq34.mvvmdemo.view.fragment.SettingFragment;
 import com.example.qqq34.mvvmdemo.view.fragment.WebFragment;
 import com.example.qqq34.mvvmdemo.viewmodel.MainViewModel;
 
@@ -51,10 +52,11 @@ public class MainActivity extends BaseActivity {
         fragmentList.add(new IOSFragment());
         fragmentList.add(new WebFragment());
         fragmentList.add(new FuliFragment());
+        fragmentList.add(new SettingFragment());
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.setFragmentList(fragmentList);
         binding.viewpager.setAdapter(viewPagerAdapter);
-        binding.viewpager.setOffscreenPageLimit(5);
+        binding.viewpager.setOffscreenPageLimit(6);
     }
 
     @Override
@@ -84,43 +86,34 @@ public class MainActivity extends BaseActivity {
         });
         binding.setViewClick(view -> {
             switch (view.getId()) {
-                case R.id.button: {
-                    int currentNightMode = getResources().getConfiguration().uiMode
-                            & Configuration.UI_MODE_NIGHT_MASK;
-                    if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-                        getDelegate().setLocalNightMode(
-                                AppCompatDelegate.MODE_NIGHT_YES);
-                    } else {
-                        getDelegate().setLocalNightMode(
-                                AppCompatDelegate.MODE_NIGHT_NO);
-                    }
-
-                    recreate();
-                    break;
-                }
                 case R.id.image_home: {
                     mViewModel.setCurrentSelecte(0);
-                    binding.viewpager.setCurrentItem(0, true);
+                    binding.viewpager.setCurrentItem(0, false);
                     break;
                 }
                 case R.id.image_android: {
                     mViewModel.setCurrentSelecte(1);
-                    binding.viewpager.setCurrentItem(1, true);
+                    binding.viewpager.setCurrentItem(1, false);
                     break;
                 }
                 case R.id.image_ios: {
                     mViewModel.setCurrentSelecte(2);
-                    binding.viewpager.setCurrentItem(2, true);
+                    binding.viewpager.setCurrentItem(2, false);
                     break;
                 }
                 case R.id.image_web: {
                     mViewModel.setCurrentSelecte(3);
-                    binding.viewpager.setCurrentItem(3, true);
+                    binding.viewpager.setCurrentItem(3, false);
                     break;
                 }
                 case R.id.image_fuli: {
                     mViewModel.setCurrentSelecte(4);
-                    binding.viewpager.setCurrentItem(4, true);
+                    binding.viewpager.setCurrentItem(4, false);
+                    break;
+                }
+                case R.id.image_setting: {
+                    mViewModel.setCurrentSelecte(5);
+                    binding.viewpager.setCurrentItem(5, false);
                     break;
                 }
             }

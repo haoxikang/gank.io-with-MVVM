@@ -11,11 +11,6 @@ import com.example.qqq34.mvvmdemo.viewmodel.MainViewModel;
 public class MainActivityPresenter extends BasePresenter<MainViewModel> {
     @Override
     public void onPresenterCreate(boolean isNewCreate) {
-       if (isNewCreate){
-           getViewModel().setButtonname("第一次");
-       }else {
-           String s = getViewModel().getButtonname();
-           getViewModel().setButtonname(s+":::第二次");
-       }
+
     }
 }
