@@ -2,6 +2,8 @@ package com.example.qqq34.mvvmdemo.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableInt;
 
 import com.example.qqq34.mvvmdemo.BR;
 
@@ -15,17 +17,53 @@ import java.util.List;
 
 public class HomeViewModel extends BaseObservable implements Serializable {
     private List<HomeItemViewModel> mHomeItemViewModelList;
-    private int lastPosition = 0;
-    private int lastOffset = 0;
+    public final ObservableInt lastPosition =  new ObservableInt(0);
+    public final ObservableBoolean isRefresh = new ObservableBoolean(false);
+    //private int lastPosition = 0;
+    private boolean isDataGet = false;
+
+    private int offsetY = 0;
+    private int offsetX = 0;
+
+    int startY = 0;
+    int startX = 0;
+
+
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public void setStartY(int startY) {
+        this.startY = startY;
+    }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public void setStartX(int startX) {
+        this.startX = startX;
+    }
+
     public HomeViewModel() {
         mHomeItemViewModelList = new ArrayList<>();
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
-        mHomeItemViewModelList.add(new HomeItemViewModel("http://ww3.sinaimg.cn/large/610dc034jw1fa7jol4pgvj20u00u0q51.jpg", "今日力推：Vue 实现的 Markdown 编辑器", "11月28日"));
     }
 
     public List<HomeItemViewModel> getHomeItemViewModelList() {
@@ -36,19 +74,11 @@ public class HomeViewModel extends BaseObservable implements Serializable {
         mHomeItemViewModelList = homeItemViewModelList;
     }
 
-    public int getLastPosition() {
-        return lastPosition;
+    public boolean isDataEnable() {
+        return isDataGet;
     }
 
-    public void setLastPosition(int lastPosition) {
-        this.lastPosition = lastPosition;
-    }
-
-    public int getLastOffset() {
-        return lastOffset;
-    }
-
-    public void setLastOffset(int lastOffset) {
-        this.lastOffset = lastOffset;
+    public void setDataEnable(boolean enable) {
+        isDataGet = enable;
     }
 }

@@ -5,11 +5,13 @@ import android.databinding.Bindable;
 
 import com.example.qqq34.mvvmdemo.BR;
 
+import java.io.Serializable;
+
 /**
  * Created by qqq34 on 2016/11/29.
  */
 
-public class HomeItemViewModel extends BaseObservable {
+public class HomeItemViewModel extends BaseObservable implements Serializable{
     private String imageUrl;
     private String name;
     private String subTitle;

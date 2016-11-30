@@ -1,5 +1,6 @@
 package com.example.qqq34.mvvmdemo.network.model.impl;
 
+import com.example.qqq34.mvvmdemo.entity.ClassificationEntity;
 import com.example.qqq34.mvvmdemo.entity.HomeEntity;
 import com.example.qqq34.mvvmdemo.entity.MovieEntity;
 import com.example.qqq34.mvvmdemo.network.HttpMethods;
@@ -14,6 +15,9 @@ import rx.Observable;
 
 public class GankModel implements IGankModel
 {
+
+    public static final int PAGE_COUNT=10;
+
     private static GankModel ourInstance;
     private GankService mGankService = HttpMethods.getInstance().getGankService();
 
@@ -35,5 +39,10 @@ public class GankModel implements IGankModel
     @Override
     public Observable<HomeEntity> getHomeData(int year, int mouth, int day) {
         return mGankService.getHomeData(year, mouth, day);
+    }
+
+    @Override
+    public Observable<ClassificationEntity> getClassifiData(String section, int page) {
+        return mGankService.getClassifiData(section, PAGE_COUNT, page);
     }
 }

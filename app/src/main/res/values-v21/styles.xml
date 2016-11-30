@@ -4,4 +4,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <style name="HomeCardView" parent="CardView">
+        <item name="android:foreground">@drawable/selecte_bk</item>
+    </style>
 </resources>

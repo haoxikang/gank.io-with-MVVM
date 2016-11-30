@@ -1,5 +1,6 @@
 package com.example.qqq34.mvvmdemo.network.model;
 
+import com.example.qqq34.mvvmdemo.entity.ClassificationEntity;
 import com.example.qqq34.mvvmdemo.entity.HomeEntity;
 import com.example.qqq34.mvvmdemo.entity.MovieEntity;
 
@@ -14,4 +15,6 @@ import rx.Observable;
 public abstract interface IGankModel
 {
     Observable<HomeEntity> getHomeData( int year, int mouth, int day);
+
+    Observable<ClassificationEntity> getClassifiData(String section,  int page);
 }

@@ -7,6 +7,9 @@
 
     <data>
         <variable
+            name="presenter"
+            type="com.github.markzhai.recyclerview.SingleTypeAdapter.Presenter"/>
+        <variable
             name="item"
             type="com.example.qqq34.mvvmdemo.viewmodel.HomeItemViewModel"/>
     </data>
@@ -22,11 +25,12 @@
         >
 
         <android.support.v7.widget.CardView
-            app:cardPreventCornerOverlap="true"
+            android:onClick="@{() -> presenter.onItemClick(item)}"
+            app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
+            style="@style/HomeCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="@drawable/selecte_bk"
             app:cardCornerRadius="4dp"
             app:cardElevation="12dp"
             app:cardMaxElevation="12dp">
@@ -37,11 +41,12 @@
                 android:orientation="vertical">
 
                 <com.facebook.drawee.view.SimpleDraweeView
+                    fresco:roundedCornerRadius="4dp"
                     android:layout_weight="1"
+                    fresco:actualImageScaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    fresco:placeholderImage="@mipmap/test"
-                    fresco:placeholderImageScaleType="centerCrop"/>
+                    fresco:frescoImageUri="@{item.imageUrl}"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
