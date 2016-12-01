@@ -7,11 +7,11 @@
 
         <variable
             name="mainViewModel"
-            type="com.example.qqq34.mvvmdemo.viewmodel.MainViewModel" />
+            type="com.fall.gank.viewmodel.MainViewModel" />
 
         <variable
             name="viewClick"
-            type="com.example.qqq34.mvvmdemo.callback.ViewClickCallback" />
+            type="com.fall.gank.callback.ViewClickCallback" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -43,11 +43,11 @@
 
 
 
-            <com.example.qqq34.mvvmdemo.view.widget.NoScrollViewPager
+            <com.fall.gank.view.widget.NoScrollViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></com.example.qqq34.mvvmdemo.view.widget.NoScrollViewPager>
+                android:layout_weight="1"></com.fall.gank.view.widget.NoScrollViewPager>
 
             <android.support.v7.widget.CardView
                 android:layout_marginLeft="-8dp"

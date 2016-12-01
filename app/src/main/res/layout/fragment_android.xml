@@ -4,10 +4,10 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.qqq34.mvvmdemo.viewmodel.AndroidViewModel"/>
+            type="com.fall.gank.viewmodel.AndroidViewModel"/>
         <variable
             name="viewClick"
-            type="com.example.qqq34.mvvmdemo.callback.ViewClickCallback" />
+            type="com.fall.gank.callback.ViewClickCallback" />
     </data>
 
 <LinearLayout

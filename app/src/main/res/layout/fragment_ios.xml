@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.qqq34.mvvmdemo.viewmodel.IOSViewModel"/>
+            type="com.fall.gank.viewmodel.IOSViewModel"/>
     </data>
 
     <LinearLayout

@@ -11,7 +11,7 @@
             type="com.github.markzhai.recyclerview.SingleTypeAdapter.Presenter"/>
         <variable
             name="item"
-            type="com.example.qqq34.mvvmdemo.viewmodel.HomeItemViewModel"/>
+            type="com.fall.gank.viewmodel.HomeItemViewModel"/>
     </data>
 
     <LinearLayout

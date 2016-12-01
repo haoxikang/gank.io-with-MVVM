@@ -11,10 +11,10 @@
             type="android.support.v7.widget.LinearLayoutManager"/>
         <variable
             name="viewmodel"
-            type="com.example.qqq34.mvvmdemo.viewmodel.HomeViewModel"/>
+            type="com.fall.gank.viewmodel.HomeViewModel"/>
    <variable
        name="refreshListener"
-       type="com.example.qqq34.mvvmdemo.callback.SwipeRefreshListener"/>
+       type="com.fall.gank.callback.SwipeRefreshListener"/>
     </data>
 
     <android.support.v4.widget.SwipeRefreshLayout
