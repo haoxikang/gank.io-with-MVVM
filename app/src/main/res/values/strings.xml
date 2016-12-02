@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MVVMDemo</string>
+    <string name="base_permission">APP需要获取访问文件的权限</string>
+    <string name="like">已收藏</string>
+    <string name="dislike">收藏</string>
 </resources>

@@ -15,6 +15,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="HomeCardView" parent="CardView">
-        <item name="android:foreground">@drawable/card_foreground</item>
+        <item name="android:foreground">@drawable/home_card_foreground</item>
+    </style>
+    <style name="ClassificationCardView" parent="CardView">
+        <item name="android:foreground">@drawable/classification_card_foreground</item>
     </style>
 </resources>

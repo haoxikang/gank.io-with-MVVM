@@ -10,6 +10,7 @@ import com.fall.gank.callback.BaseListCallback;
 
 import java.util.List;
 
+import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -76,5 +77,13 @@ if (callback!=null){
     @Override
     public void setListCallback(BaseListCallback baseListCallback) {
         mBaseListCallback = baseListCallback;
+    }
+
+    @Override
+    public Observable<Boolean> checkPermission(int resString, String... mPerms) {
+        if (callback!=null){
+            return callback.checkPermission(resString,mPerms);
+        }
+        return null;
     }
 }

@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        TinkerServerManager.checkTinkerUpdate(false);
+
         mViewModel = new MainViewModel(0);
         binding.setMainViewModel(mViewModel);
         mMainActivityPresenter = new MainActivityPresenter();

@@ -6,24 +6,25 @@ import android.databinding.Bindable;
 import com.fall.gank.BR;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 康颢曦 on 2016/11/27.
  */
 
 public class AndroidViewModel extends BaseObservable implements Serializable{
-    private String name;
+private List<ClassificationItemViewModel> mClassificationItemViewModelList;
 
-    public AndroidViewModel(String name) {
-        this.name = name;
-    }
-    @Bindable
-    public String getName() {
-        return name;
+    public AndroidViewModel() {
+        mClassificationItemViewModelList = new ArrayList<>();
     }
 
-    public void setName(String name) {
-        this.name = name;
-        notifyPropertyChanged(BR.name);
+    public List<ClassificationItemViewModel> getClassificationItemViewModelList() {
+        return mClassificationItemViewModelList;
+    }
+
+    public void setClassificationItemViewModelList(List<ClassificationItemViewModel> classificationItemViewModelList) {
+        mClassificationItemViewModelList = classificationItemViewModelList;
     }
 }

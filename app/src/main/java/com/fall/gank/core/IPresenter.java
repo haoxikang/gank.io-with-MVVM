@@ -8,6 +8,8 @@ import com.fall.gank.callback.BaseListCallback;
 
 import java.util.List;
 
+import rx.Observable;
+
 
 /**
  * Created by qqq34 on 2016/11/24.
@@ -24,4 +26,5 @@ public interface IPresenter<V extends BaseObservable> {
     void setCallback(BaseActivityCallback baseActivityCallback);
     void setListCallback(BaseListCallback baseListCallback);
     void showList(List list);
+    Observable<Boolean> checkPermission(int resString, String... mPerms);
 }

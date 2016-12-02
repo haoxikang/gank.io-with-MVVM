@@ -7,4 +7,7 @@
     <style name="HomeCardView" parent="CardView">
         <item name="android:foreground">@drawable/selecte_bk</item>
     </style>
+    <style name="ClassificationCardView" parent="CardView">
+        <item name="android:foreground">@drawable/selecte_bk</item>
+    </style>
 </resources>

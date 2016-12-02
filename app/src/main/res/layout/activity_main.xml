@@ -50,6 +50,7 @@
                 android:layout_weight="1"></com.fall.gank.view.widget.NoScrollViewPager>
 
             <android.support.v7.widget.CardView
+                android:layout_marginTop="-8dp"
                 android:layout_marginLeft="-8dp"
                 android:layout_marginRight="-8dp"
                 android:layout_marginBottom="-8dp"
@@ -69,6 +70,7 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="0"
                         android:id="@+id/image_home"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -78,9 +80,10 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_home_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==0?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="1"
                         android:id="@+id/image_android"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -90,9 +93,10 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_android_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==1?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="2"
                         android:id="@+id/image_ios"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -102,9 +106,10 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_ios_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==2?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="3"
                         android:id="@+id/image_web"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -114,9 +119,10 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_important_devices_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==3?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="4"
                         android:id="@+id/image_fuli"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -126,8 +132,9 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_card_giftcard_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==4?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
                     <android.support.v7.widget.AppCompatImageView
+                        android:tag="5"
                         android:id="@+id/image_setting"
                         android:layout_width="24dp"
                         android:layout_height="match_parent"
@@ -137,7 +144,7 @@
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
                         android:src="@mipmap/ic_card_giftcard_black_24dp"
-                        android:tint="@{mainViewModel.currentSelecte==5?@color/colorPrimary:@color/SecondaryText}" />
+                        app:homeTint="@{mainViewModel.currentSelecte}" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

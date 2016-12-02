@@ -11,7 +11,7 @@
     <color name="statusBar">#30000000</color>
     <color name="ripple_color">#30000000</color>
 
-
+    <color name="favorite_color">#D34F4F</color>
 
     <color name="swipeColor">#303030</color>
 

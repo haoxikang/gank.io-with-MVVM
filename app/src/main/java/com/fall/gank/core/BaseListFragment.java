@@ -1,5 +1,7 @@
 package com.fall.gank.core;
 
+import android.util.Log;
+
 import com.fall.gank.callback.BaseListCallback;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
@@ -19,6 +21,7 @@ public abstract class BaseListFragment extends BaseFragment implements BaseListC
     public abstract SingleTypeAdapter getAdapter();
     @Override
     public void onListLoadFinished(List list) {
+        Log.d("调用","tiaoyong");
         getAdapter().set(list);
     }
 }
