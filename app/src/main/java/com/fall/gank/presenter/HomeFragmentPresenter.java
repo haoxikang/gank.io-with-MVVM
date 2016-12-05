@@ -38,14 +38,14 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
 
             mCompositeSubscription.add(checkPermission(R.string.base_permission, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe(aBoolean -> {
-                        if (aBoolean){
+                        if (aBoolean) {
                             TinkerServerManager.checkTinkerUpdate(true);
                         }
-                    },throwable -> {}));
+                    }, throwable -> {
+                    }));
 
 
-            Type collectionType = new TypeToken<List<HomeItemViewModel>>() {
-            }.getType();
+            Type collectionType = new TypeToken<List<HomeItemViewModel>>() {}.getType();
             mCompositeSubscription.add(Reservoir.getUsingObservable(KEY, HomeItemViewModel.class, collectionType)
                     .compose(RxUtils.applyIOToMainThreadSchedulers())
                     .toList()
@@ -60,6 +60,7 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
 
 
         } else {
+            page = getViewModel().getPage();
             if (getViewModel().isRefresh.get()) {
                 getHomeData(page);
             }
@@ -69,7 +70,9 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
     public void getHomeData(int page) {
         if (page == 1) {
             this.page = 1;
+
         }
+        getViewModel().setPage(this.page);
         getViewModel().isRefresh.set(true);
         mCompositeSubscription.add(mManager.getHomeData(this.page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
@@ -107,6 +110,7 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
                     }
                     getViewModel().setDataEnable(true);
                     this.page++;
+                    getViewModel().setPage(this.page);
                 }));
     }
 
@@ -114,7 +118,6 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
         if (page == 1) page++;
         if (!getViewModel().isRefresh.get()) {
             getHomeData(page);
-            Log.d("tag", "加载");
         } else return;
     }
 

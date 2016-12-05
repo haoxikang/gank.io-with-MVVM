@@ -16,6 +16,8 @@ public class HomeViewModel extends BaseObservable implements Serializable {
     private List<HomeItemViewModel> mHomeItemViewModelList;
     public final ObservableInt lastPosition =  new ObservableInt(0);
     public final ObservableBoolean isRefresh = new ObservableBoolean(false);
+    public int page=1;
+
     //private int lastPosition = 0;
     private boolean isDataGet = false;
 
@@ -38,5 +40,13 @@ public class HomeViewModel extends BaseObservable implements Serializable {
 
     public void setDataEnable(boolean enable) {
         isDataGet = enable;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }
