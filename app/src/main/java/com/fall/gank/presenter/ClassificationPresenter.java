@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import rx.Observable;
@@ -28,7 +29,7 @@ import rx.Observable;
  */
 
 public class ClassificationPresenter extends BasePresenter<ClassificationViewModel> {
-    private String KEY = "ClassificationPresenter.androidKey";
+    private String KEY = "ClassificationPresenter.Key";
     private String type;
     private IGankModel mModel = GankModel.getInstance();
     private List<ClassificationItemViewModel> mList = new ArrayList<>();
@@ -51,10 +52,10 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                         }
                     }, throwable -> getData(page), () -> getData(page)));
         } else {
-            page = getViewModel().getPage();
-            if (getViewModel().isRefresh.get()) {
-                getData(page);
-            }
+                page = getViewModel().getPage();
+                if (getViewModel().isRefresh.get()) {
+                    getData(page);
+                }
         }
     }
 
@@ -69,10 +70,10 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                 .map(classificationEntity -> classificationEntity.getResults())
                 .flatMap(Observable::from)
                 .subscribe(classificationResultsEntity -> {
-                            String[] strings;
+                            HashMap<String,String> hashMap;
                             try {
-                               strings = TimeUtils.getTime(classificationResultsEntity.getPublishedAt());
-                                mList.add(new ClassificationItemViewModel(classificationResultsEntity.getType(), classificationResultsEntity.getDesc(),strings[0],strings[1]+"/"+strings[2], false));
+                                hashMap = TimeUtils.getTime(classificationResultsEntity.getPublishedAt());
+                                mList.add(new ClassificationItemViewModel(classificationResultsEntity.getType(), classificationResultsEntity.getDesc(),hashMap.get(TimeUtils.YEAR),hashMap.get(TimeUtils.MONTH)+"/"+hashMap.get(TimeUtils.DAY), false));
 
                             } catch (ParseException e) {
                                  Observable.error(e);

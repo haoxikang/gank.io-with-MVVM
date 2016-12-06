@@ -2,6 +2,8 @@ package com.fall.gank.network.model;
 
 import com.fall.gank.entity.ClassificationEntity;
 
+import java.text.ParseException;
+
 import rx.Observable;
 
 /**

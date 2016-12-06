@@ -18,7 +18,6 @@ import java.util.List;
 public class ClassificationViewModel extends BaseObservable implements Serializable{
     public final ObservableBoolean isRefresh = new ObservableBoolean(false);
     public final ObservableBoolean isDataEnable = new ObservableBoolean(false);
-    public final ObservableInt lastPosition =  new ObservableInt(0);
   private   int  lastOffset;
     private   int position ;
     private String type;

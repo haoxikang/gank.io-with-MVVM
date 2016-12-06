@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="com.fall.gank.viewmodel.ImageItemViewModel"/>
+        <variable
+            name="presenter"
+            type="com.github.markzhai.recyclerview.SingleTypeAdapter.Presenter"/>
+    </data>
+    <LinearLayout
+        android:onClick="@{() -> presenter.onItemClick(item)}"
+        android:foreground="@drawable/selecte_bk"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+
+            fresco:actualImageScaleType="centerCrop"
+            fresco:viewAspectRatio="0.8"
+            binding:frescoImageUriWithSmallSize="@{item.url}"
+            android:layout_margin="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>

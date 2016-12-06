@@ -18,7 +18,10 @@ public class BindingUtils {
     public static void showImageByUrl(final SimpleDraweeView simpleDraweeView, String url) {
         FrescoUtils.displayWithResize(600, 600, Uri.parse(url), simpleDraweeView);
     }
-
+    @BindingAdapter("frescoImageUriWithSmallSize")
+    public static void showImageByUrlWithSmallSize(final SimpleDraweeView simpleDraweeView, String url) {
+        FrescoUtils.displayWithResize(350, 350, Uri.parse(url), simpleDraweeView);
+    }
     @BindingAdapter("setRefreshing")
     public static void setRefreshing(final SwipeRefreshLayout swipeRefreshLayout, boolean isRefresh) {
 

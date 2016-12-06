@@ -72,7 +72,6 @@ public class HomeFragment extends BaseListFragment {
     @Override
     public void initData() {
         homeViewModel = new HomeViewModel();
-
         initList();
     }
 

@@ -143,7 +143,7 @@
                         android:background="@drawable/selecte_bk"
                         android:onClick="@{viewClick::onClick}"
                         android:scaleType="center"
-                        android:src="@mipmap/ic_card_giftcard_black_24dp"
+                        android:src="@drawable/ic_list"
                         app:homeTint="@{mainViewModel.currentSelecte}" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>

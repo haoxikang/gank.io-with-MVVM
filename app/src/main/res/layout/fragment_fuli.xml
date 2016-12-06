@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewmodel"
             type="com.fall.gank.viewmodel.FuliViewModel"/>
+        <variable
+            name="adapter"
+            type="android.support.v7.widget.RecyclerView.Adapter"/>
+
+        <variable
+            name="layoutmanager"
+            type="android.support.v7.widget.LinearLayoutManager"/>
+        <variable
+            name="refreshListener"
+            type="com.fall.gank.callback.SwipeRefreshListener"/>
     </data>
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        app:onRefresh="@{refreshListener}"
+        app:setRefreshing="@{viewmodel.isRefresh}"
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:text="@{viewmodel.name}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</layout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fuli_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{adapter}"
+            app:layoutManager="@{layoutmanager}">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    </layout>

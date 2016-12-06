@@ -1,8 +1,12 @@
 package com.fall.gank.Utils;
 
+import org.stringtemplate.v4.ST;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 
@@ -11,14 +15,19 @@ import rx.Observable;
  */
 
 public class TimeUtils {
-    public static String[] getTime(String s) throws ParseException {
+    public static final String YEAR = "TimeUtils.YEAR";
+    public static final String MONTH = "TimeUtils.MONTH";
+    public static final String DAY = "TimeUtils.DAY";
+
+    public static HashMap<String, String> getTime(String s) throws ParseException {
+        HashMap<String, String> hashMap = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sdf.parse(s));
-        String[] strings = new String[3];
-        strings[0] = calendar.get(Calendar.YEAR) + "";
-        strings[1] = calendar.get(Calendar.MONTH) + 1 + "";
-        strings[2] = calendar.get(Calendar.DAY_OF_MONTH) + "";
-        return strings;
+        hashMap.put(YEAR, calendar.get(Calendar.YEAR) + "");
+        hashMap.put(MONTH, calendar.get(Calendar.MONTH) + 1 + "");
+        hashMap.put(DAY, calendar.get(Calendar.DAY_OF_MONTH) + "");
+
+        return hashMap;
     }
 }
