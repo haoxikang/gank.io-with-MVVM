@@ -18,12 +18,14 @@ public class ClassificationItemViewModel extends BaseObservable implements Seria
     public final ObservableField<String> year = new ObservableField<>();
     public final ObservableField<String> monthAndDay = new ObservableField<>();
     public final ObservableBoolean isLike = new ObservableBoolean(false);
+    public final ObservableField<String> url = new ObservableField<>();
 
-    public ClassificationItemViewModel(String classificationName, String dimension, String year, String monthAndDay, boolean isLike) {
+    public ClassificationItemViewModel(String classificationName, String dimension, String year, String monthAndDay, boolean isLike,String url) {
         this.classificationName.set(classificationName);
         this.dimension.set(dimension);
         this.year.set(year);
         this.monthAndDay.set(monthAndDay);
         this.isLike.set(isLike);
+        this.url.set(url);
     }
 }

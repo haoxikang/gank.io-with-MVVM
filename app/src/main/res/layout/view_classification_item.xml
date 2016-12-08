@@ -2,94 +2,115 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="presenter"
             type="com.github.markzhai.recyclerview.SingleTypeAdapter.Presenter"/>
+
         <variable
             name="item"
             type="com.fall.gank.viewmodel.ClassificationItemViewModel"/>
+
+        <variable
+            name="like"
+            type="com.fall.gank.callback.LikeClickListener"/>
     </data>
+
     <LinearLayout
-android:paddingTop="4dp"
-android:paddingLeft="8dp"
-android:paddingRight="8dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp">
+
         <android.support.v7.widget.CardView
-            android:onClick="@{() -> presenter.onItemClick(item)}"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
             style="@style/ClassificationCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> presenter.onItemClick(item)}"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
-            app:cardMaxElevation="4dp">
+            app:cardMaxElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
+
             <LinearLayout
-                android:orientation="vertical"
-                android:padding="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
                 <TextView
-                    android:textSize="12sp"
-                    android:textColor="@color/PrimaryText"
-                    android:text="@{item.classificationName}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@{item.classificationName}"
+                    android:textColor="@color/PrimaryText"
+                    android:textSize="12sp"/>
+
                 <TextView
-                    android:textSize="13sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@{item.dimension}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="13sp"/>
+
                 <LinearLayout
-                    android:layout_marginTop="18dp"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
                     <LinearLayout
-                        android:layout_gravity="center"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
+                        android:foreground="@drawable/selecte_bk"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:onClick="@{()->like.onLikeClick(item)}"
+                        android:orientation="vertical">
+
                         <ImageView
-                            android:layout_gravity="center"
-                            app:classificationLikeTint="@{item.isLike}"
-                            android:src="@{item.isLike==true? @drawable/ic_favorite:@drawable/ic_favorite_border}"
                             android:layout_width="18dp"
-                            android:layout_height="18dp"/>
-                        <TextView
-                            android:textColor="@{item.isLike==true?@color/favorite_color:@color/SecondaryText}"
-                            android:layout_marginTop="4dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center"
-                            android:textSize="10sp"
-                            android:text="@{item.isLike==true?@string/like :@string/dislike}"
+                            android:src="@{item.isLike==true? @drawable/ic_favorite:@drawable/ic_favorite_border}"
+                            app:classificationLikeTint="@{item.isLike}"/>
+
+                        <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="@{item.isLike==true?@string/like :@string/dislike}"
+                            android:textColor="@{item.isLike==true?@color/favorite_color:@color/SecondaryText}"
+                            android:textSize="10sp"/>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:orientation="vertical">
+
                         <TextView
-                            android:layout_gravity="center"
-                            android:textSize="14sp"
-                            android:textColor="@color/SecondaryText"
-                            android:text="@{item.year}"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{item.year}"
                             android:textColor="@color/SecondaryText"
-                            android:textSize="14sp"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@{item.monthAndDay}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/SecondaryText"
+                            android:textSize="14sp"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

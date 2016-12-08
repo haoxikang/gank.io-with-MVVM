@@ -1,5 +1,6 @@
 package com.fall.gank.view.activity;
 
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.widget.Toast;
 
 import com.fall.gank.R;
 import com.fall.gank.Utils.MDStatusBarCompat;
@@ -18,9 +21,7 @@ import com.fall.gank.presenter.MainActivityPresenter;
 import com.fall.gank.view.fragment.ClassificationFragment;
 import com.fall.gank.view.fragment.FuliFragment;
 import com.fall.gank.view.fragment.HomeFragment;
-import com.fall.gank.view.fragment.IOSFragment;
 import com.fall.gank.view.fragment.SettingFragment;
-import com.fall.gank.view.fragment.WebFragment;
 import com.fall.gank.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -114,6 +115,14 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.go_github:
+                 WebViewActivity.newIntent(MainActivity.this,"https://github.com/348476129/MVVM-framework");
+                    break;
+            }
+            return true;
+        });
     }
 
     @Override
@@ -141,4 +150,9 @@ public class MainActivity extends BaseActivity {
         return mViewModel;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
 }

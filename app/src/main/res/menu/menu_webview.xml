@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/open"
+          android:title="在浏览器中打开"
+          android:orderInCategory="100"
+          android:icon="@null"
+          app:showAsAction="never"/>
+    <item android:id="@+id/copy"
+          android:title="复制链接地址"
+          android:orderInCategory="100"
+          android:icon="@null"
+          app:showAsAction="never"/>
+    <item android:id="@+id/refresh"
+          android:title="从新加载"
+          android:orderInCategory="100"
+          android:icon="@null"
+          app:showAsAction="never"/>
+</menu>

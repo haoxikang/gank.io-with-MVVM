@@ -6,6 +6,7 @@ import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.Utils.RxUtils;
 import com.fall.gank.Utils.TimeUtils;
 import com.fall.gank.core.BasePresenter;
+import com.fall.gank.database.Collection;
 import com.fall.gank.network.converter.ResultException;
 import com.fall.gank.network.model.IGankModel;
 import com.fall.gank.network.model.impl.GankModel;
@@ -52,10 +53,10 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                         }
                     }, throwable -> getData(page), () -> getData(page)));
         } else {
-                page = getViewModel().getPage();
-                if (getViewModel().isRefresh.get()) {
-                    getData(page);
-                }
+            page = getViewModel().getPage();
+            if (getViewModel().isRefresh.get()) {
+                getData(page);
+            }
         }
     }
 
@@ -70,13 +71,21 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                 .map(classificationEntity -> classificationEntity.getResults())
                 .flatMap(Observable::from)
                 .subscribe(classificationResultsEntity -> {
-                            HashMap<String,String> hashMap;
+
+                            HashMap<String, String> hashMap;
                             try {
                                 hashMap = TimeUtils.getTime(classificationResultsEntity.getPublishedAt());
-                                mList.add(new ClassificationItemViewModel(classificationResultsEntity.getType(), classificationResultsEntity.getDesc(),hashMap.get(TimeUtils.YEAR),hashMap.get(TimeUtils.MONTH)+"/"+hashMap.get(TimeUtils.DAY), false));
+                                ClassificationItemViewModel model = new ClassificationItemViewModel(classificationResultsEntity.getType(), classificationResultsEntity.getDesc(), hashMap.get(TimeUtils.YEAR), hashMap.get(TimeUtils.MONTH) + "/" + hashMap.get(TimeUtils.DAY), false, classificationResultsEntity.getUrl());
+                                List<Collection> list = Collection.find(Collection.class, "url=?", model.url.get());
+                                if (list.size() > 0) {
+                                    model.isLike.set(true);
+                                } else {
+                                    model.isLike.set(false);
+                                }
+                                mList.add(model);
 
                             } catch (ParseException e) {
-                                 Observable.error(e);
+                                Observable.error(e);
                             }
                         }, throwable -> {
                             getViewModel().isRefresh.set(false);

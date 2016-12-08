@@ -17,6 +17,7 @@ import com.fall.gank.tinker.SamplePatchListener;
 import com.fall.gank.tinker.SampleResultService;
 import com.fall.gank.tinker.TinkerServerManager;
 import com.fall.gank.tinker.Utils;
+import com.orm.SugarContext;
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.lib.listener.PatchListener;
 import com.tencent.tinker.lib.patch.AbstractPatch;
@@ -53,10 +54,16 @@ public class MyApplicationLike extends ApplicationLike {
     }
 
     @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        SugarContext.init(getApplication());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Fresco.initialize(getApplication());
         try {
             Reservoir.init(getApplication(), 20480); //in bytes

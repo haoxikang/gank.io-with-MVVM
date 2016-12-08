@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fall.gank.R;
+import com.fall.gank.adapter.ClassificationAdapterDecorator;
 import com.fall.gank.core.BaseListFragment;
 import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.FragmentClassificationBinding;
 import com.fall.gank.presenter.ClassificationPresenter;
+import com.fall.gank.view.activity.WebViewActivity;
 import com.fall.gank.viewmodel.ClassificationViewModel;
 import com.fall.gank.viewmodel.ClassificationItemViewModel;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
@@ -38,6 +40,7 @@ public class ClassificationFragment extends BaseListFragment {
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
+        mSingleTypeAdapter.setDecorator(new ClassificationAdapterDecorator());
         mLinearLayoutManager.scrollToPositionWithOffset(mClassificationViewModel.getPosition(),mClassificationViewModel.getLastOffset());
     }
 
@@ -48,6 +51,7 @@ public class ClassificationFragment extends BaseListFragment {
         binding.swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.swipeColor));
         binding.setRefreshListener(() -> mClassificationPresenter.getData(1));
         mSingleTypeAdapter.setPresenter((SingleTypeAdapter.Presenter<ClassificationItemViewModel>) classificationItemViewModel -> {
+            WebViewActivity.newIntent(getContext(),classificationItemViewModel.url.get());
         });
 
         binding.classificationList.addOnScrollListener(new RecyclerView.OnScrollListener() {

@@ -42,11 +42,9 @@ public class SettingFragment extends BaseFragment {
             int currentNightMode = getResources().getConfiguration().uiMode
                     & Configuration.UI_MODE_NIGHT_MASK;
             if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-                ((AppCompatActivity) getActivity()).getDelegate().setLocalNightMode(
-                        AppCompatDelegate.MODE_NIGHT_YES);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
-                ((AppCompatActivity) getActivity()).getDelegate().setLocalNightMode(
-                        AppCompatDelegate.MODE_NIGHT_NO);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
             getActivity().recreate();
