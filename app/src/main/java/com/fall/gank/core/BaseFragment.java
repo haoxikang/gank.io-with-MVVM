@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,5 +99,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         if (isVisibleToUser) {
         Log.d("tag","可见");
         }
+    }
+    public boolean isDarkTheme(){
+        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
     }
 }

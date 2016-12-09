@@ -1,8 +1,5 @@
 package com.fall.gank.database;
 
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-
 import com.orm.SugarRecord;
 import com.orm.dsl.Unique;
 

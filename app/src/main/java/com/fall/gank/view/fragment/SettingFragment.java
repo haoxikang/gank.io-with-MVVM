@@ -4,11 +4,13 @@ import android.content.res.Configuration;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.fall.gank.core.BaseFragment;
 import com.fall.gank.core.IPresenter;
@@ -38,31 +40,44 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     public void initListeners() {
-        binding.setViewClick(view -> {
-            int currentNightMode = getResources().getConfiguration().uiMode
-                    & Configuration.UI_MODE_NIGHT_MASK;
-            if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+        binding.switchbutton.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                if (!isDarkTheme()) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    mSettingFragmentPresenter.updateSetting(true);
+                    getActivity().recreate();
+                }
 
-            getActivity().recreate();
+
+            } else {
+                if (isDarkTheme()) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    mSettingFragmentPresenter.updateSetting(false);
+                    getActivity().recreate();
+                }
+
+            }
+        });
+        binding.collectionLayout.setOnClickListener(view -> {
+
         });
     }
 
     @Override
     public void initOldData(@Nullable BaseObservable baseObservable) {
         mSettingViewModel = (SettingViewModel) baseObservable;
+        mSettingViewModel.setDarkTheme(isDarkTheme());
         binding.setViewModel(mSettingViewModel);
         mSettingFragmentPresenter = new SettingFragmentPresenter();
     }
 
     @Override
     public void initData() {
-        mSettingViewModel = new SettingViewModel("按钮");
+
+        mSettingViewModel = new SettingViewModel(isDarkTheme());
         binding.setViewModel(mSettingViewModel);
         mSettingFragmentPresenter = new SettingFragmentPresenter();
+
     }
 
     @Override

@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.fall.gank.entity.SettingData;
+import com.fall.gank.presenter.SettingFragmentPresenter;
 import com.fall.gank.tinker.SampleLoadReporter;
 import com.fall.gank.tinker.SamplePatchListener;
 import com.fall.gank.tinker.SampleResultService;
@@ -30,6 +32,9 @@ import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
+
+import java.io.IOException;
+
 /**
  * Created by qqq34 on 2016/12/1.
  */
@@ -63,12 +68,25 @@ public class MyApplicationLike extends ApplicationLike {
     public void onCreate() {
         super.onCreate();
         SugarContext.init(getApplication());
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+       // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Fresco.initialize(getApplication());
         try {
             Reservoir.init(getApplication(), 20480); //in bytes
         } catch (Exception e) {
             //failure
+        }
+        try {
+            SettingData settingData = Reservoir.get(SettingFragmentPresenter.SETTING_KEY,SettingData.class);
+            if (settingData!=null){
+                if (settingData.isDarkTheme()){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         getApplication().registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {

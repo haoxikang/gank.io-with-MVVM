@@ -2,9 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable
-            name="viewClick"
-            type="com.fall.gank.callback.ViewClickCallback" />
     <variable
         name="viewModel"
         type="com.fall.gank.viewmodel.SettingViewModel"/>
@@ -13,13 +10,58 @@
                   android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
-        <Button
-            android:text="@{viewModel.name}"
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:onClick="@{viewClick::onClick}" />
+
+<LinearLayout
+    android:layout_marginTop="2dp"
+    android:id="@+id/collection_layout"
+    android:background="?attr/selectableItemBackground"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_gravity="center"
+        android:tint="@color/favorite_color"
+        android:src="@drawable/ic_favorite"
+        android:layout_width="24dp"
+        android:layout_height="24dp"/>
+    <TextView
+        android:layout_marginLeft="12dp"
+        android:layout_gravity="center"
+        android:textColor="@color/SecondaryText"
+        android:text="我的收藏"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+<View
+    android:background="@color/DividerColor"
+    android:layout_width="match_parent"
+    android:layout_height="2px"/>
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_brightness_2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+            <TextView
+                android:textColor="@color/SecondaryText"
+                android:layout_gravity="center"
+                android:text="夜间模式"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <android.support.v7.widget.SwitchCompat
+                android:checked="@{viewModel.isDarkTheme}"
+                android:theme="@style/Color1SwitchStyle"
+                android:id="@+id/switchbutton"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -20,4 +20,7 @@
     <style name="ClassificationCardView" parent="CardView">
         <item name="android:foreground">@drawable/classification_card_foreground</item>
     </style>
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
 </resources>

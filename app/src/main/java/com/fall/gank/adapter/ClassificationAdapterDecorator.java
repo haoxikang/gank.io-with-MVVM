@@ -25,7 +25,7 @@ public class ClassificationAdapterDecorator implements BaseViewAdapter.Decorator
                 classificationItemViewModel.isLike.set(true)  ;
             }else {
                 List<Collection> list = Collection.find(Collection.class,"url=?",classificationItemViewModel.url.get());
-                if (list.size()>0){
+                if (list!=null&&list.size()>0){
                     Collection collection = list.get(0);
                    classificationItemViewModel.isLike.set(!collection.delete());
                 }

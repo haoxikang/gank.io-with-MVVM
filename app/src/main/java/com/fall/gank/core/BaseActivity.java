@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 
 import com.example.rxpermisson.PermissionAppCompatActivity;
@@ -85,5 +86,7 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
         }
         super.onSaveInstanceState(outState);
     }
-
+public boolean isDarkTheme(){
+    return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
+}
 }

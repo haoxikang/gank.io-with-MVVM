@@ -7,7 +7,7 @@
     <color name="PrimaryText">#bcbcbc</color>
     <color name="SecondaryText">#757575</color>
     <color name="Text_Icons">#ffffff</color>
-    <color name="DividerColor">#BDBDBD</color>
+    <color name="DividerColor">#666666</color>
     <color name="statusBar">#30000000</color>
     <color name="ripple_color">#30000000</color>
 
