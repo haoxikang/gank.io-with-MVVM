@@ -13,7 +13,7 @@
     </data>
     <LinearLayout
         android:onClick="@{() -> presenter.onItemClick(item)}"
-        android:foreground="@drawable/selecte_bk"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

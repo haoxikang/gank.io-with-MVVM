@@ -64,7 +64,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:foreground="@drawable/selecte_bk"
+                        android:foreground="?attr/selectableItemBackground"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -53,7 +53,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
         Toolbar toolbar = mWebviewActivityBinding.toolbar;
-        toolbar.setTitle("DataBinding");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

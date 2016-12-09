@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
         Toolbar toolbar = binding.toolbar;
-        toolbar.setTitle("DataBinding");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
 
