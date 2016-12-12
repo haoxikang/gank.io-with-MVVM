@@ -1,4 +1,4 @@
-/*
+package com.fall.gank.tinker;/*
  * Tencent is pleased to support the open source community by making Tinker available.
  *
  * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-package com.fall.gank.tinker;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -53,39 +52,40 @@ public class SampleResultService extends DefaultTinkerResultService {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             if (result.isSuccess) {
-        //        Toast.makeText(getApplicationContext(), "patch success", Toast.LENGTH_LONG).show();
+                //        Toast.makeText(getApplicationContext(), "patch success", Toast.LENGTH_LONG).show();
                 TinkerLog.i(TAG, "patch success");
                 TinkerServerManager.reportTinkerPatchFail(result);
             } else {
-             //   Toast.makeText(getApplicationContext(), "patch fail, please check reason", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), "patch fail, please check reason", Toast.LENGTH_LONG).show();
                 TinkerLog.i(TAG, "patch fail, please check reason");
             }
         });
-        if (result.isSuccess&& result.isUpgradePatch) {
+        if (result.isSuccess && result.isUpgradePatch) {
             File rawFile = new File(result.rawPatchFilePath);
             if (rawFile.exists()) {
                 TinkerLog.i(TAG, "safe delete raw patch file");
                 SharePatchFileUtil.safeDeleteFile(rawFile);
             }
-        }
-        if (checkIfNeedKill(result)) {
-            if (MyApplicationLike.isBackground()) {
-                TinkerLog.i(TAG, "it is in background, just restart process");
-                restartProcess();
-            } else {
-                //we can wait process at background, such as onAppBackground
-                //or we can restart when the screen off
-                TinkerLog.i(TAG, "tinker wait app status change background");
-                Utils.setAppStatusChangedListenner(isBackground -> {
-                    if (isBackground){
-                        restartProcess();
-                    }
+            if (checkIfNeedKill(result)) {
+                if (MyApplicationLike.isBackground()) {
+                    TinkerLog.i(TAG, "it is in background, just restart process");
+                    restartProcess();
+                } else {
+                    //we can wait process at background, such as onAppBackground
+                    //or we can restart when the screen off
+                    TinkerLog.i(TAG, "tinker wait app status change background");
+                    Utils.setAppStatusChangedListenner(isBackground -> {
+                        if (isBackground) {
+                            restartProcess();
+                        }
 
-                });
+                    });
+                }
+            } else {
+                TinkerLog.i(TAG, "I have already install the newly patch version!");
             }
-        } else {
-            TinkerLog.i(TAG, "I have already install the newly patch version!");
         }
+
         if (!result.isSuccess && !result.isUpgradePatch) {
             //if you have not install tinker this moment, you can use TinkerApplicationHelper api
             Tinker.with(getApplicationContext()).cleanPatch();

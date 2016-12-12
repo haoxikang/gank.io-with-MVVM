@@ -1,6 +1,7 @@
 package com.fall.gank.network.model;
 
 import com.fall.gank.entity.ClassificationEntity;
+import com.fall.gank.viewmodel.ClassificationItemViewModel;
 
 import java.text.ParseException;
 
@@ -14,5 +15,6 @@ public interface IDataManager {
 
     Observable<ClassificationEntity> getHomeData(int page);
 
+    Observable<ClassificationItemViewModel> getClassificationData(String section, int page);
 
 }

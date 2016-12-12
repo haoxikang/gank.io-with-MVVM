@@ -84,6 +84,7 @@ dependencies {
     compile 'com.github.satyan:sugar:1.5'
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.android.support:support-vector-drawable:25.0.1'
+    compile 'me.relex:photodraweeview:1.1.2'
     testCompile 'junit:junit:4.12'
 }
 

@@ -1,5 +1,6 @@
 package com.fall.gank.view.fragment;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.fall.gank.core.BaseFragment;
 import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.FragmentSettingBinding;
 import com.fall.gank.presenter.SettingFragmentPresenter;
+import com.fall.gank.view.activity.CollectionActivity;
 import com.fall.gank.viewmodel.SettingViewModel;
 
 /**
@@ -59,7 +61,7 @@ public class SettingFragment extends BaseFragment {
             }
         });
         binding.collectionLayout.setOnClickListener(view -> {
-
+            startActivity(new Intent(getActivity(), CollectionActivity.class));
         });
     }
 

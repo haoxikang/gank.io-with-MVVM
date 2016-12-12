@@ -2,9 +2,9 @@ package com.fall.gank.adapter;
 
 import android.util.Log;
 
+import com.fall.gank.BR;
 import com.fall.gank.callback.LikeClickListener;
 import com.fall.gank.database.Collection;
-import com.github.markzhai.recyclerview.BR;
 import com.github.markzhai.recyclerview.BaseViewAdapter;
 import com.github.markzhai.recyclerview.BindingViewHolder;
 
@@ -28,6 +28,9 @@ public class ClassificationAdapterDecorator implements BaseViewAdapter.Decorator
                 if (list!=null&&list.size()>0){
                     Collection collection = list.get(0);
                    classificationItemViewModel.isLike.set(!collection.delete());
+                }else {
+                    classificationItemViewModel.isLike.set(false
+                    );
                 }
 
             }

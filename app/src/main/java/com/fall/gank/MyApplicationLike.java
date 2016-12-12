@@ -70,24 +70,22 @@ public class MyApplicationLike extends ApplicationLike {
         SugarContext.init(getApplication());
        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Fresco.initialize(getApplication());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         try {
             Reservoir.init(getApplication(), 20480); //in bytes
-        } catch (Exception e) {
-            //failure
-        }
-        try {
             SettingData settingData = Reservoir.get(SettingFragmentPresenter.SETTING_KEY,SettingData.class);
-            if (settingData!=null){
-                if (settingData.isDarkTheme()){
+            if (settingData!=null) {
+                if (settingData.isDarkTheme()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }else {
+                } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } catch (Exception e) {
+            //failure
         }
+
+
 
         getApplication().registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override

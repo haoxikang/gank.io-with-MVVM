@@ -1,5 +1,7 @@
 package com.fall.gank.view.fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.fall.gank.core.BaseListFragment;
 import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.FragmentFuliBinding;
 import com.fall.gank.presenter.FuliFragmentPresenter;
+import com.fall.gank.view.activity.PhotoActivity;
 import com.fall.gank.viewmodel.FuliViewModel;
 import com.fall.gank.viewmodel.ImageItemViewModel;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
@@ -52,7 +55,7 @@ public class FuliFragment extends BaseListFragment {
         binding.swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.swipeColor));
         binding.setRefreshListener(() -> fuliFragmentPresenter.getData(1));
         mAdapter.setPresenter((SingleTypeAdapter.Presenter<ImageItemViewModel>) imageItemViewModel -> {
-
+            PhotoActivity.newIntent(getContext(), imageItemViewModel.url.get());
         });
         binding.fuliList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -60,8 +63,8 @@ public class FuliFragment extends BaseListFragment {
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     View topView = manager.getChildAt(0);
-                    if (topView!=null){
-                        int  lastOffset = topView.getTop();
+                    if (topView != null) {
+                        int lastOffset = topView.getTop();
                         int position = manager.getPosition(topView);
 
                         fuliViewModel.setLastOffset(lastOffset);

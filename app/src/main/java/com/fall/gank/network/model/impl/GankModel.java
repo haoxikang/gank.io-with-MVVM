@@ -42,6 +42,7 @@ public class GankModel implements IGankModel
 
     @Override
     public Observable<ClassificationEntity> getClassifiData(String section, int page) {
+
         return mGankService.getClassifiData(section, PAGE_COUNT, page);
     }
 }

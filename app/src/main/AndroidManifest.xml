@@ -21,7 +21,7 @@
             android:value="1"/>
         <meta-data
             android:name="QUERY_LOG"
-            android:value="false"/>
+            android:value="true"/>
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.fall.gank.database"/>
@@ -37,10 +37,8 @@
 
         <service android:name=".tinker.SampleResultService"/>
 
-        <activity
-            android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_settings">
-        </activity>
+        <activity android:name=".view.activity.CollectionActivity"/>
+        <activity android:name=".view.activity.PhotoActivity"/>
     </application>
 
 </manifest>

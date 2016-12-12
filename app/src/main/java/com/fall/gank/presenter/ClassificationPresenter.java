@@ -8,6 +8,8 @@ import com.fall.gank.Utils.TimeUtils;
 import com.fall.gank.core.BasePresenter;
 import com.fall.gank.database.Collection;
 import com.fall.gank.network.converter.ResultException;
+import com.fall.gank.network.model.DataManager;
+import com.fall.gank.network.model.IDataManager;
 import com.fall.gank.network.model.IGankModel;
 import com.fall.gank.network.model.impl.GankModel;
 import com.fall.gank.viewmodel.ClassificationViewModel;
@@ -33,6 +35,7 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
     private String KEY = "ClassificationPresenter.Key";
     private String type;
     private IGankModel mModel = GankModel.getInstance();
+    private IDataManager mManager = new DataManager();
     private List<ClassificationItemViewModel> mList = new ArrayList<>();
     private int page = 1;
 
@@ -43,8 +46,18 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
             }.getType();
             mCompositeSubscription.add(Reservoir.getUsingObservable(KEY + type, ClassificationItemViewModel.class, collectionType)
                     .compose(RxUtils.applyIOToMainThreadSchedulers())
+                    .map(classificationItemViewModel -> {
+                        List<Collection> list = Collection.find(Collection.class, "url=?", classificationItemViewModel.url.get());
+                        if (list.size() > 0) {
+                            classificationItemViewModel.isLike.set(true);
+                        } else {
+                            classificationItemViewModel.isLike.set(false);
+                        }
+                        return classificationItemViewModel;
+                    })
                     .toList()
                     .subscribe(classificationItemViewModels -> {
+
                         if (classificationItemViewModels.size() > 0) {
                             getViewModel().setClassificationItemViewModelList(classificationItemViewModels);
                             //     mAdapter.set(getViewModel().getHomeItemViewModelList());
@@ -66,28 +79,9 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
         }
         getViewModel().setPage(this.page);
         getViewModel().isRefresh.set(true);
-        mCompositeSubscription.add(mModel.getClassifiData(type, page)
+        mCompositeSubscription.add(mManager.getClassificationData(type, page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
-                .map(classificationEntity -> classificationEntity.getResults())
-                .flatMap(Observable::from)
-                .subscribe(classificationResultsEntity -> {
-
-                            HashMap<String, String> hashMap;
-                            try {
-                                hashMap = TimeUtils.getTime(classificationResultsEntity.getPublishedAt());
-                                ClassificationItemViewModel model = new ClassificationItemViewModel(classificationResultsEntity.getType(), classificationResultsEntity.getDesc(), hashMap.get(TimeUtils.YEAR), hashMap.get(TimeUtils.MONTH) + "/" + hashMap.get(TimeUtils.DAY), false, classificationResultsEntity.getUrl());
-                                List<Collection> list = Collection.find(Collection.class, "url=?", model.url.get());
-                                if (list.size() > 0) {
-                                    model.isLike.set(true);
-                                } else {
-                                    model.isLike.set(false);
-                                }
-                                mList.add(model);
-
-                            } catch (ParseException e) {
-                                Observable.error(e);
-                            }
-                        }, throwable -> {
+                .subscribe(classificationItemViewModel -> mList.add(classificationItemViewModel), throwable -> {
                             getViewModel().isRefresh.set(false);
                             if (throwable instanceof ResultException) {
                                 showSnakbar("数据错误");
@@ -96,7 +90,6 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                             }
                         }
                         , () -> {
-
                             if (page == 1) {
                                 getViewModel().getClassificationItemViewModelList().clear();
                             }

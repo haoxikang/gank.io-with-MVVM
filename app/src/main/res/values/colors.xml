@@ -12,4 +12,9 @@
     <color name="ripple_color">#20000000</color>
 <color name="favorite_color">#ED5656</color>
     <color name="swipeColor">#fafafa</color>
+
+    <color name="tranceToolbarColor">#00000000</color>
+
+
+
 </resources>
