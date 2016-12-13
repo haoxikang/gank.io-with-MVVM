@@ -81,9 +81,9 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
                 .subscribe(classificationResultsEntity -> {
                     String[] strings = classificationResultsEntity.getDesc().split("######");
                     if (strings.length == 2) {
-                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), strings[1], strings[0]));
+                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), strings[1], strings[0],classificationResultsEntity.getVideoUrl()));
                     } else {
-                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), classificationResultsEntity.getDesc(), "未知"));
+                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), classificationResultsEntity.getDesc(), "未知",classificationResultsEntity.getVideoUrl()));
                     }
 
                 }, throwable -> {

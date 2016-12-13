@@ -30,6 +30,15 @@ public class ClassificationResultsEntity {
     private boolean used;
     private String who;
     private List<String> images;
+    private String videoUrl;
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 
     public String get_id() {
         return _id;

@@ -81,6 +81,7 @@ public class DataManager implements IDataManager {
             try {
                 HashMap<String, String> hashMap = TimeUtils.getTime(fuli.getPublishedAt());
                 fuli.setDesc(hashMap.get(TimeUtils.YEAR) + "-" + hashMap.get(TimeUtils.MONTH) + "-" + hashMap.get(TimeUtils.DAY) + "######" + reset.getDesc());
+                fuli.setVideoUrl(reset.getUrl());
             } catch (ParseException e) {
 
                 fuli.setDesc(fuli.getDesc() + "######" + reset.getDesc());

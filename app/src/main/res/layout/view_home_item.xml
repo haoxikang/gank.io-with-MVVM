@@ -6,12 +6,18 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="presenter"
             type="com.github.markzhai.recyclerview.SingleTypeAdapter.Presenter"/>
+
         <variable
             name="item"
             type="com.fall.gank.viewmodel.HomeItemViewModel"/>
+
+        <variable
+            name="title"
+            type="com.fall.gank.callback.HomeTitleListener"/>
     </data>
 
     <LinearLayout
@@ -25,15 +31,15 @@
         >
 
         <android.support.v7.widget.CardView
-            android:onClick="@{() -> presenter.onItemClick(item)}"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
             style="@style/HomeCardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{() -> presenter.onItemClick(item)}"
             app:cardCornerRadius="4dp"
             app:cardElevation="12dp"
-            app:cardMaxElevation="12dp">
+            app:cardMaxElevation="12dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,18 +47,20 @@
                 android:orientation="vertical">
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    fresco:roundedCornerRadius="4dp"
-                    android:layout_weight="1"
-                    fresco:actualImageScaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    fresco:frescoImageUri="@{item.imageUrl}"/>
+                    android:layout_weight="1"
+                    fresco:actualImageScaleType="centerCrop"
+                    fresco:frescoImageUri="@{item.imageUrl}"
+                    fresco:roundedCornerRadius="4dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->title.onHomeTitleClick(item)}"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"

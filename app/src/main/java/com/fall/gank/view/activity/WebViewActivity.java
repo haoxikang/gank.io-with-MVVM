@@ -76,11 +76,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void initListeners() {
         mWebviewActivityBinding.toolbar.setNavigationOnClickListener(view -> {
-            if (mWebviewActivityBinding.webview.canGoBack()) {
-                mWebviewActivityBinding.webview.goBack();
-            } else {
                 finish();
-            }
         });
         mWebviewActivityBinding.toolbar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();

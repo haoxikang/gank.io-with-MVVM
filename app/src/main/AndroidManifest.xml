@@ -26,19 +26,36 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.fall.gank.database"/>
 
-        <activity android:name=".view.activity.MainActivity">
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.WebViewActivity"/>
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".tinker.SampleResultService"/>
 
-        <activity android:name=".view.activity.CollectionActivity"/>
-        <activity android:name=".view.activity.PhotoActivity"/>
+        <activity
+            android:name=".view.activity.CollectionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PreservedActivity1"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PreservedActivity2"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PreservedActivity3"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

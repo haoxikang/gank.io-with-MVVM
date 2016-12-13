@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fall.gank.R;
+import com.fall.gank.adapter.HomeAdapterDecorator;
 import com.fall.gank.core.BaseListFragment;
 import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.FragmentHomeBinding;
 import com.fall.gank.presenter.HomeFragmentPresenter;
+import com.fall.gank.view.activity.WebViewActivity;
 import com.fall.gank.view.widget.RecyclerviewScrollHelper;
 import com.fall.gank.view.widget.SlowlyScrollLinearLayoutManager;
 import com.fall.gank.viewmodel.HomeItemViewModel;
@@ -42,6 +44,12 @@ public class HomeFragment extends BaseListFragment {
         binding.swipeContainer.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         binding.swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.swipeColor));
         mLinearLayoutManager.scrollToPosition(homeViewModel.lastPosition.get());
+        mHomeItemViewModelSingleTypeAdapter.setDecorator(new HomeAdapterDecorator() {
+            @Override
+            public void onHomeClick(HomeItemViewModel homeItemViewModel) {
+                WebViewActivity.newIntent(getContext(),homeItemViewModel.getVideoUrl());
+            }
+        });
         mRecyclerviewScrollHelper = new RecyclerviewScrollHelper(binding.homeRecyclerview);
 
 
