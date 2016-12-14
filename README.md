@@ -1,5 +1,5 @@
 ###APP介绍
- - 一款精致的gankio客户端，日夜主题，收藏，MVVM，数据恢复等，用到了时下热门的框架：[热更新框架Tinker](http://www.jianshu.com/p/b100b64544f3)，[Rxjava](https://github.com/ReactiveX/RxJava)，[RxAndorid](https://github.com/ReactiveX/RxAndroid)，[图片框架fresco](https://github.com/facebook/fresco)，[缓存框架](https://github.com/anupcowkur/Reservoir)，[数据库框架](https://github.com/satyan/sugar)
+ - 一款精致的gankio客户端，日夜主题，收藏，MVVM，数据恢复等，用到了时下热门的框架：[热更新框架Tinker](https://github.com/Tencent/tinker)，[Rxjava](https://github.com/ReactiveX/RxJava)，[RxAndorid](https://github.com/ReactiveX/RxAndroid)，[图片框架fresco](https://github.com/facebook/fresco)，[缓存框架](https://github.com/anupcowkur/Reservoir)，[数据库框架](https://github.com/satyan/sugar)
 ,还用到了自己的一款开源权限管理工具[RxPermission](https://github.com/348476129/RxPermission)。
 
 ###框架介绍
