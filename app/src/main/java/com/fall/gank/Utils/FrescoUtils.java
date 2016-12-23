@@ -60,6 +60,9 @@ public class FrescoUtils {
         imgView.setController(controller);
     }
 
+
+
+
     public static void savePicture(String picUrl,Context context) {
 
         File picDir = new File(IMAGE_PIC_CACHE_DIR);

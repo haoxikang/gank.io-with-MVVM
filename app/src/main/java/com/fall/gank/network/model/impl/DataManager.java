@@ -1,4 +1,4 @@
-package com.fall.gank.network.model;
+package com.fall.gank.network.model.impl;
 
 import android.util.Log;
 
@@ -6,6 +6,8 @@ import com.fall.gank.Utils.TimeUtils;
 import com.fall.gank.database.Collection;
 import com.fall.gank.entity.ClassificationEntity;
 import com.fall.gank.entity.ClassificationResultsEntity;
+import com.fall.gank.network.model.IDataManager;
+import com.fall.gank.network.model.IGankModel;
 import com.fall.gank.network.model.impl.GankModel;
 import com.fall.gank.viewmodel.ClassificationItemViewModel;
 
@@ -35,9 +37,15 @@ public class DataManager implements IDataManager {
         if (section.equals("collection")) {
             observable = Observable.create(subscriber -> {
                 try {
-                    List<Collection> collections = Collection.listAll(Collection.class);
-                    subscriber.onNext(collections);
-                    subscriber.onCompleted();
+                    if (page==1){
+                        List<Collection> collections = Collection.listAll(Collection.class);
+                        subscriber.onNext(collections);
+                        subscriber.onCompleted();
+                    }else {
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
+                    }
+
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }

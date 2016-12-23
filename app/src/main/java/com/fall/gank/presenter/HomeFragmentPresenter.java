@@ -1,14 +1,13 @@
 package com.fall.gank.presenter;
 
 import android.Manifest;
-import android.util.Log;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.R;
 import com.fall.gank.Utils.RxUtils;
 import com.fall.gank.core.BasePresenter;
 import com.fall.gank.network.converter.ResultException;
-import com.fall.gank.network.model.DataManager;
+import com.fall.gank.network.model.impl.DataManager;
 import com.fall.gank.network.model.IDataManager;
 import com.fall.gank.tinker.TinkerServerManager;
 import com.fall.gank.viewmodel.HomeItemViewModel;

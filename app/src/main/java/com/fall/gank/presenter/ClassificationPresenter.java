@@ -1,14 +1,11 @@
 package com.fall.gank.presenter;
 
-import android.util.Log;
-
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.Utils.RxUtils;
-import com.fall.gank.Utils.TimeUtils;
 import com.fall.gank.core.BasePresenter;
 import com.fall.gank.database.Collection;
 import com.fall.gank.network.converter.ResultException;
-import com.fall.gank.network.model.DataManager;
+import com.fall.gank.network.model.impl.DataManager;
 import com.fall.gank.network.model.IDataManager;
 import com.fall.gank.network.model.IGankModel;
 import com.fall.gank.network.model.impl.GankModel;
@@ -17,15 +14,8 @@ import com.fall.gank.viewmodel.ClassificationItemViewModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
-import rx.Observable;
 
 /**
  * Created by 康颢曦 on 2016/11/27.
@@ -34,7 +24,6 @@ import rx.Observable;
 public class ClassificationPresenter extends BasePresenter<ClassificationViewModel> {
     private String KEY = "ClassificationPresenter.Key";
     private String type;
-    private IGankModel mModel = GankModel.getInstance();
     private IDataManager mManager = new DataManager();
     private List<ClassificationItemViewModel> mList = new ArrayList<>();
     private int page = 1;
@@ -81,33 +70,38 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
         getViewModel().isRefresh.set(true);
         mCompositeSubscription.add(mManager.getClassificationData(type, page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
-                .subscribe(classificationItemViewModel -> mList.add(classificationItemViewModel), throwable -> {
-                            getViewModel().isRefresh.set(false);
-                            if (throwable instanceof ResultException) {
-                                showSnakbar("数据错误");
-                            } else {
-                                showSnakbar("连接失败，请重试");
-                            }
+                .subscribe(classificationItemViewModel -> {
+                    if (classificationItemViewModel!=null) {
+                        mList.add(classificationItemViewModel);
+                    }
+
+                }, throwable -> {
+                        getViewModel().isRefresh.set(false);
+                        if (throwable instanceof ResultException) {
+                            showSnakbar("数据错误");
+                        } else {
+                            showSnakbar("连接失败，请重试");
                         }
-                        , () -> {
-                            if (page == 1) {
-                                getViewModel().getClassificationItemViewModelList().clear();
-                            }
-                            getViewModel().getClassificationItemViewModelList().addAll(mList);
-                            mList.clear();
-                            getViewModel().isRefresh.set(false);
-                            showList(getViewModel().getClassificationItemViewModelList());
-                            if (page == 1) {
-                                mCompositeSubscription.add(Reservoir.putUsingObservable(KEY + type, getViewModel().getClassificationItemViewModelList())
-                                        .compose(RxUtils.applyIOToMainThreadSchedulers())
-                                        .subscribe(aBoolean -> {
-                                        }, throwable -> {
-                                        }));
-                            }
-                            getViewModel().isDataEnable.set(true);
-                            this.page++;
-                            getViewModel().setPage(this.page);
-                        }));
+                    }
+                            , () -> {
+                        if (page == 1) {
+                            getViewModel().getClassificationItemViewModelList().clear();
+                        }
+                        getViewModel().getClassificationItemViewModelList().addAll(mList);
+                        mList.clear();
+                        getViewModel().isRefresh.set(false);
+                        showList(getViewModel().getClassificationItemViewModelList());
+                        if (page == 1) {
+                            mCompositeSubscription.add(Reservoir.putUsingObservable(KEY + type, getViewModel().getClassificationItemViewModelList())
+                                    .compose(RxUtils.applyIOToMainThreadSchedulers())
+                                    .subscribe(aBoolean -> {
+                                    }, throwable -> {
+                                    }));
+                        }
+                        getViewModel().isDataEnable.set(true);
+                        this.page++;
+                        getViewModel().setPage(this.page);
+                    }));
     }
 
     public void loadNext() {
