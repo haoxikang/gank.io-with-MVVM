@@ -39,8 +39,6 @@
             android:name=".view.activity.WebViewActivity"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".tinker.SampleResultService"/>
-
         <activity
             android:name=".view.activity.CollectionActivity"
             android:screenOrientation="portrait"/>
