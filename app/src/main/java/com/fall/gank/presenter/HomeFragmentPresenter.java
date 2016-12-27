@@ -7,12 +7,12 @@ import com.fall.gank.R;
 import com.fall.gank.Utils.RxUtils;
 import com.fall.gank.core.BasePresenter;
 import com.fall.gank.network.converter.ResultException;
-import com.fall.gank.network.model.impl.DataManager;
 import com.fall.gank.network.model.IDataManager;
-import com.fall.gank.tinker.TinkerServerManager;
+import com.fall.gank.network.model.impl.DataManager;
 import com.fall.gank.viewmodel.HomeItemViewModel;
 import com.fall.gank.viewmodel.HomeViewModel;
 import com.google.gson.reflect.TypeToken;
+import com.tinkerpatch.sdk.TinkerPatch;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,13 +38,14 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
             mCompositeSubscription.add(checkPermission(R.string.base_permission, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe(aBoolean -> {
                         if (aBoolean) {
-                            TinkerServerManager.checkTinkerUpdate(true);
+                            TinkerPatch.with().fetchPatchUpdate(true);
                         }
                     }, throwable -> {
                     }));
 
 
-            Type collectionType = new TypeToken<List<HomeItemViewModel>>() {}.getType();
+            Type collectionType = new TypeToken<List<HomeItemViewModel>>() {
+            }.getType();
             mCompositeSubscription.add(Reservoir.getUsingObservable(KEY, HomeItemViewModel.class, collectionType)
                     .compose(RxUtils.applyIOToMainThreadSchedulers())
                     .toList()
@@ -80,9 +81,9 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
                 .subscribe(classificationResultsEntity -> {
                     String[] strings = classificationResultsEntity.getDesc().split("######");
                     if (strings.length == 2) {
-                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), strings[1], strings[0],classificationResultsEntity.getVideoUrl()));
+                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), strings[1], strings[0], classificationResultsEntity.getVideoUrl()));
                     } else {
-                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), classificationResultsEntity.getDesc(), "未知",classificationResultsEntity.getVideoUrl()));
+                        mHomeItemViewModels.add(new HomeItemViewModel(classificationResultsEntity.getUrl(), classificationResultsEntity.getDesc(), "未知", classificationResultsEntity.getVideoUrl()));
                     }
 
                 }, throwable -> {

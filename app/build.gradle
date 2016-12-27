@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.tencent.tinker.patch'
-
-
-def bakPath = file("bakApk/")
-
-def gitSha() {
-    String gitRev = "1.0.0"
-    return gitRev
-}
+apply from: 'tinkerpatch.gradle'
 
 
 android {
@@ -28,15 +20,12 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        buildConfigField "String", "APP_KEY", "\"489ea6ba17a0d002\""
-        buildConfigField "String", "APP_VERSION", "\"1.0.0\""
         applicationId "com.fall.gank"
         multiDexEnabled = true
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0.0"
-        multiDexKeepProguard file("keep_in_main_dex.txt")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -76,9 +65,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.1.0'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.anupcowkur:reservoir:3.1.0'
-    compile 'com.tencent.tinker:tinker-android-anno:1.7.5'
-    compile 'com.tencent.tinker:tinker-android-lib:1.7.5'
-    compile 'com.tencent.tinker:tinker-server-android:0.3.0'
+    provided("com.tencent.tinker:tinker-android-anno:1.7.6")
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.0.1")
     compile 'com.android.support:multidex:1.0.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
     compile 'com.github.satyan:sugar:1.5'
@@ -86,162 +74,4 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:25.1.0'
     compile 'me.relex:photodraweeview:1.1.2'
     testCompile 'junit:junit:4.12'
-}
-
-ext {
-    //for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
-    tinkerEnabled = true
-
-    //for normal build
-    //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/app-release-1202-11-46-38.apk"
-    //proguard mapping file to build patch apk
-    tinkerApplyMappingPath = "${bakPath}/"
-    //resource R.txt to build patch apk, must input if there is resource changed
-    tinkerApplyResourcePath = "${bakPath}/app-release-1202-11-46-38-R.txt"
-
-    //only use for build all flavor, if not, just ignore this field
-    tinkerBuildFlavorDirectory = "${bakPath}/"
-}
-
-
-def getOldApkPath() {
-    return hasProperty("OLD_APK") ? OLD_APK : ext.tinkerOldApkPath
-}
-
-def getApplyMappingPath() {
-    return hasProperty("APPLY_MAPPING") ? APPLY_MAPPING : ext.tinkerApplyMappingPath
-}
-
-def getApplyResourceMappingPath() {
-    return hasProperty("APPLY_RESOURCE") ? APPLY_RESOURCE : ext.tinkerApplyResourcePath
-}
-
-def getTinkerIdValue() {
-    return hasProperty("TINKER_ID") ? TINKER_ID : gitSha()
-}
-
-def buildWithTinker() {
-    return hasProperty("TINKER_ENABLE") ? TINKER_ENABLE : ext.tinkerEnabled
-}
-
-def getTinkerBuildFlavorDirectory() {
-    return ext.tinkerBuildFlavorDirectory
-}
-
-if (buildWithTinker()) {
-    tinkerPatch {
-        oldApk = getOldApkPath()
-        ignoreWarning = false
-        useSign = true
-        buildConfig {
-            applyMapping = getApplyMappingPath()
-            applyResourceMapping = getApplyResourceMappingPath()
-            tinkerId = getTinkerIdValue()
-        }
-        dex {
-            dexMode = "jar"
-            pattern = ["classes*.dex",
-                       "assets/secondary-dex-?.jar"]
-            loader = ["com.tencent.tinker.loader.*",
-                      //warning, you must change it with your application
-                      "com.fall.gank.Application",
-                      //use sample, let BaseBuildInfo unchangeable with tinker
-            ]
-        }
-        lib {
-            pattern = ["lib/armeabi/*.so"]
-        }
-        res {
-            pattern = ["res/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
-            ignoreChange = ["assets/sample_meta.txt"]
-            largeModSize = 100
-        }
-        packageConfig {
-            configField("patchMessage", "tinker is sample to use")
-            configField("platform", "all")
-            configField("patchVersion", "1.0")
-        }
-        sevenZip {
-            zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
-        }
-    }
-    List<String> flavors = new ArrayList<>();
-    project.android.productFlavors.each { flavor ->
-        flavors.add(flavor.name)
-    }
-    boolean hasFlavors = flavors.size() > 0
-    android.applicationVariants.all { variant ->
-        /**
-         * task type, you want to bak
-         */
-        def taskName = variant.name
-
-        tasks.all {
-            if ("assemble${taskName.capitalize()}".equalsIgnoreCase(it.name)) {
-                it.doLast {
-                    copy {
-                        def date = new Date().format("MMdd-HH-mm-ss")
-                        from "${buildDir}/outputs/apk/${project.getName()}-${taskName}.apk"
-                        into bakPath
-                        rename { String fileName ->
-                            fileName.replace("${project.getName()}-${taskName}.apk", "${project.getName()}-${taskName}-${date}.apk")
-                        }
-
-                        from "${buildDir}/outputs/mapping/${taskName}/mapping.txt"
-                        into bakPath
-                        rename { String fileName ->
-                            fileName.replace("mapping.txt", "${project.getName()}-${taskName}-${date}-mapping.txt")
-                        }
-
-                        from "${buildDir}/intermediates/symbols/${taskName}/R.txt"
-                        into bakPath
-                        rename { String fileName ->
-                            fileName.replace("R.txt", "${project.getName()}-${taskName}-${date}-R.txt")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    project.afterEvaluate {
-        //sample use for build all flavor for one time
-        if (hasFlavors) {
-            task(tinkerPatchAllFlavorRelease) {
-                group = 'tinker'
-                def originOldPath = getTinkerBuildFlavorDirectory()
-                for (String flavor : flavors) {
-                    def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Release")
-                    dependsOn tinkerTask
-                    def preAssembleTask = tasks.getByName("process${flavor.capitalize()}ReleaseManifest")
-                    preAssembleTask.doFirst {
-                        String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 15)
-                        project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release.apk"
-                        project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-mapping.txt"
-                        project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-R.txt"
-
-                    }
-
-                }
-            }
-
-            task(tinkerPatchAllFlavorDebug) {
-                group = 'tinker'
-                def originOldPath = getTinkerBuildFlavorDirectory()
-                for (String flavor : flavors) {
-                    def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Debug")
-                    dependsOn tinkerTask
-                    def preAssembleTask = tasks.getByName("process${flavor.capitalize()}DebugManifest")
-                    preAssembleTask.doFirst {
-                        String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 13)
-                        project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug.apk"
-                        project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-mapping.txt"
-                        project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-R.txt"
-                    }
-
-                }
-            }
-        }
-    }
-
 }
