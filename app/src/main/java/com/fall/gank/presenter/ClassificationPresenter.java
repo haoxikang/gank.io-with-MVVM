@@ -71,37 +71,37 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
         mCompositeSubscription.add(mManager.getClassificationData(type, page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(classificationItemViewModel -> {
-                    if (classificationItemViewModel!=null) {
-                        mList.add(classificationItemViewModel);
-                    }
+                            if (classificationItemViewModel != null) {
+                                mList.add(classificationItemViewModel);
+                            }
 
-                }, throwable -> {
-                        getViewModel().isRefresh.set(false);
-                        if (throwable instanceof ResultException) {
-                            showSnakbar("数据错误");
-                        } else {
-                            showSnakbar("连接失败，请重试");
+                        }, throwable -> {
+                            getViewModel().isRefresh.set(false);
+                            if (throwable instanceof ResultException) {
+                                showSnakbar("数据错误");
+                            } else {
+                                showSnakbar("连接失败，请重试");
+                            }
                         }
-                    }
-                            , () -> {
-                        if (page == 1) {
-                            getViewModel().getClassificationItemViewModelList().clear();
-                        }
-                        getViewModel().getClassificationItemViewModelList().addAll(mList);
-                        mList.clear();
-                        getViewModel().isRefresh.set(false);
-                        showList(getViewModel().getClassificationItemViewModelList());
-                        if (page == 1) {
-                            mCompositeSubscription.add(Reservoir.putUsingObservable(KEY + type, getViewModel().getClassificationItemViewModelList())
-                                    .compose(RxUtils.applyIOToMainThreadSchedulers())
-                                    .subscribe(aBoolean -> {
-                                    }, throwable -> {
-                                    }));
-                        }
-                        getViewModel().isDataEnable.set(true);
-                        this.page++;
-                        getViewModel().setPage(this.page);
-                    }));
+                        , () -> {
+                            if (page == 1) {
+                                getViewModel().getClassificationItemViewModelList().clear();
+                            }
+                            getViewModel().getClassificationItemViewModelList().addAll(mList);
+                            mList.clear();
+                            getViewModel().isRefresh.set(false);
+                            showList(getViewModel().getClassificationItemViewModelList());
+                            if (page == 1) {
+                                mCompositeSubscription.add(Reservoir.putUsingObservable(KEY + type, getViewModel().getClassificationItemViewModelList())
+                                        .compose(RxUtils.applyIOToMainThreadSchedulers())
+                                        .subscribe(aBoolean -> {
+                                        }, throwable -> {
+                                        }));
+                            }
+                            getViewModel().isDataEnable.set(true);
+                            this.page++;
+                            getViewModel().setPage(this.page);
+                        }));
     }
 
     public void loadNext() {

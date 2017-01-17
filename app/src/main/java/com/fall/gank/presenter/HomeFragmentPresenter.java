@@ -113,7 +113,7 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
                     getViewModel().setPage(this.page);
                 }));
     }
-
+                                                                     
     public void loadNext() {
         if (page == 1) page++;
         if (!getViewModel().isRefresh.get()) {

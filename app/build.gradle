@@ -65,8 +65,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.1.0'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.anupcowkur:reservoir:3.1.0'
-    provided("com.tencent.tinker:tinker-android-anno:1.7.6")
-    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.0.1")
+    provided("com.tencent.tinker:tinker-android-anno:1.7.7")
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.1.1")
     compile 'com.android.support:multidex:1.0.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
     compile 'com.github.satyan:sugar:1.5'

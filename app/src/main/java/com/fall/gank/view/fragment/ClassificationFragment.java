@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fall.gank.R;
+import com.fall.gank.Utils.ListLoadNextHelper;
 import com.fall.gank.adapter.ClassificationAdapterDecorator;
 import com.fall.gank.core.BaseListFragment;
 import com.fall.gank.core.IPresenter;
@@ -41,7 +42,7 @@ public class ClassificationFragment extends BaseListFragment {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         mSingleTypeAdapter.setDecorator(new ClassificationAdapterDecorator());
-        mLinearLayoutManager.scrollToPositionWithOffset(mClassificationViewModel.getPosition(),mClassificationViewModel.getLastOffset());
+        mLinearLayoutManager.scrollToPositionWithOffset(mClassificationViewModel.getPosition(), mClassificationViewModel.getLastOffset());
     }
 
     @Override
@@ -51,38 +52,17 @@ public class ClassificationFragment extends BaseListFragment {
         binding.swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.swipeColor));
         binding.setRefreshListener(() -> mClassificationPresenter.getData(1));
         mSingleTypeAdapter.setPresenter((SingleTypeAdapter.Presenter<ClassificationItemViewModel>) classificationItemViewModel -> {
-            WebViewActivity.newIntent(getContext(),classificationItemViewModel.url.get());
+            WebViewActivity.newIntent(getContext(), classificationItemViewModel.url.get());
         });
 
-        binding.classificationList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    View topView = manager.getChildAt(0);
-                    if (topView!=null){
-                        int  lastOffset = topView.getTop();
-                        int position = manager.getPosition(topView);
-
-                        mClassificationViewModel.setLastOffset(lastOffset);
-                        mClassificationViewModel.setPosition(position);
-
-
-                        int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                        if (lastVisibleItem == manager.getItemCount() - 1) {
-                            if (mClassificationViewModel.isDataEnable.get()) {
-                                mClassificationPresenter.loadNext();
-                            }
-                            return;
-                        }
-                    }
-
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+        ListLoadNextHelper listLoadNextHelper = new ListLoadNextHelper(binding.classificationList);
+        listLoadNextHelper.setListOffsetListener((lastOffset, position) -> {
+            mClassificationViewModel.setLastOffset(lastOffset);
+            mClassificationViewModel.setPosition(position);
+        });
+        listLoadNextHelper.setScrollLastListener(() -> {
+            if (mClassificationViewModel.isDataEnable.get()) {
+                mClassificationPresenter.loadNext();
             }
         });
 

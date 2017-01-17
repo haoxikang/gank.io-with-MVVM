@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.fall.gank.callback.BaseActivityCallback;
 import com.fall.gank.callback.BaseListCallback;
+import com.fall.gank.network.converter.ResultException;
 
 import java.util.List;
 

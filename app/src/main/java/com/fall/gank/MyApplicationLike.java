@@ -27,10 +27,11 @@ import com.tinkerpatch.sdk.TinkerPatch;
 )
 public class MyApplicationLike extends ApplicationLike {
     private static int count = 0;
-    public MyApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent, Resources[] resources, ClassLoader[] classLoader, AssetManager[] assetManager) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent, resources, classLoader, assetManager);
 
+    public MyApplicationLike(Application application, int i, boolean b, long l, long l1, Intent intent) {
+        super(application, i, b, l, l1, intent);
     }
+
 
     @Override
     public void onBaseContextAttached(Context base) {
