@@ -1,5 +1,7 @@
 package com.fall.gank.presenter;
 
+import android.util.Log;
+
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.Utils.RxUtils;
 import com.fall.gank.core.BasePresenter;

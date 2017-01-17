@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import com.fall.gank.core.BaseActivity;
 import com.fall.gank.core.IPresenter;
 
+import java.util.List;
+
 /**
  * Created by qqq34 on 2016/12/13.
  */
@@ -43,9 +45,10 @@ public class PreservedActivity3 extends BaseActivity {
     }
 
     @Override
-    public IPresenter getPresenter() {
+    public List<IPresenter> getPresenter() {
         return null;
     }
+
 
     @Override
     public BaseObservable getViewModel() {

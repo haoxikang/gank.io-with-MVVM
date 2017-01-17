@@ -11,8 +11,8 @@ import android.view.View;
 public class ListLoadNextHelper {
     private RecyclerView mRecyclerView;
 
-    private static ListOffsetListener mListOffsetListener;
-    private static ScrollLastListener mScrollLastListener;
+    private  ListOffsetListener mListOffsetListener;
+    private  ScrollLastListener mScrollLastListener;
 
     public interface ScrollLastListener{
         void onScrollLast();
@@ -59,11 +59,11 @@ public class ListLoadNextHelper {
     }
 
 
-    public static void setListOffsetListener(ListOffsetListener listOffsetListener) {
+    public  void setListOffsetListener(ListOffsetListener listOffsetListener) {
         mListOffsetListener = listOffsetListener;
     }
 
-    public static void setScrollLastListener(ScrollLastListener scrollLastListener) {
+    public  void setScrollLastListener(ScrollLastListener scrollLastListener) {
         mScrollLastListener = scrollLastListener;
     }
 }

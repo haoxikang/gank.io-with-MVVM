@@ -15,13 +15,18 @@ public abstract class BaseListFragment extends BaseFragment implements BaseListC
 
     @Override
     public void initListeners() {
-        getPresenter().setListCallback(this);
+        if (getPresenter()!=null&&getPresenter().size()>0){
+            for (IPresenter iPresenter:getPresenter()){
+                if (iPresenter!=null){
+                    iPresenter.setListCallback(this);
+                }
+            }
+        }
     }
 
     public abstract SingleTypeAdapter getAdapter();
     @Override
     public void onListLoadFinished(List list) {
-        Log.d("调用","tiaoyong");
         getAdapter().set(list);
     }
 }

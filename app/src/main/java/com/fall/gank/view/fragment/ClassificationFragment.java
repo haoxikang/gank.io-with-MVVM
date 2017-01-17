@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.fall.gank.viewmodel.ClassificationViewModel;
 import com.fall.gank.viewmodel.ClassificationItemViewModel;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 康颢曦 on 2016/11/27.
  */
@@ -32,7 +36,7 @@ public class ClassificationFragment extends BaseListFragment {
     private SingleTypeAdapter<ClassificationItemViewModel> mSingleTypeAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     public static String KEY = "ClassificationFragment.key";
-
+private ListLoadNextHelper listLoadNextHelper;
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = FragmentClassificationBinding.inflate(inflater, container, false);
@@ -55,12 +59,13 @@ public class ClassificationFragment extends BaseListFragment {
             WebViewActivity.newIntent(getContext(), classificationItemViewModel.url.get());
         });
 
-        ListLoadNextHelper listLoadNextHelper = new ListLoadNextHelper(binding.classificationList);
+         listLoadNextHelper = new ListLoadNextHelper(binding.classificationList);
         listLoadNextHelper.setListOffsetListener((lastOffset, position) -> {
             mClassificationViewModel.setLastOffset(lastOffset);
             mClassificationViewModel.setPosition(position);
         });
         listLoadNextHelper.setScrollLastListener(() -> {
+
             if (mClassificationViewModel.isDataEnable.get()) {
                 mClassificationPresenter.loadNext();
             }
@@ -91,8 +96,10 @@ public class ClassificationFragment extends BaseListFragment {
     }
 
     @Override
-    public IPresenter getPresenter() {
-        return mClassificationPresenter;
+    public List<IPresenter> getPresenter() {
+        List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(mClassificationPresenter);
+        return iPresenterList;
     }
 
     @Override

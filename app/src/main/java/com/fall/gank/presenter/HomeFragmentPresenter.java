@@ -1,6 +1,7 @@
 package com.fall.gank.presenter;
 
 import android.Manifest;
+import android.util.Log;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.R;

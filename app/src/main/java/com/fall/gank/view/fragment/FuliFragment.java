@@ -37,7 +37,7 @@ public class FuliFragment extends BaseListFragment {
     private FuliViewModel fuliViewModel;
     private SingleTypeAdapter<ImageItemViewModel> mAdapter;
     private GridLayoutManager mGridLayoutManager;
-
+private  ListLoadNextHelper listLoadNextHelper;
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = FragmentFuliBinding.inflate(inflater, container, false);
@@ -58,7 +58,7 @@ public class FuliFragment extends BaseListFragment {
         mAdapter.setPresenter((SingleTypeAdapter.Presenter<ImageItemViewModel>) imageItemViewModel -> {
             PhotoActivity.newIntent(getContext(), imageItemViewModel.url.get());
         });
-        ListLoadNextHelper listLoadNextHelper = new ListLoadNextHelper(binding.fuliList);
+         listLoadNextHelper = new ListLoadNextHelper(binding.fuliList);
         listLoadNextHelper.setListOffsetListener((lastOffset, position) -> {
             fuliViewModel.setLastOffset(lastOffset);
             fuliViewModel.setPosition(position);
@@ -89,8 +89,10 @@ public class FuliFragment extends BaseListFragment {
     }
 
     @Override
-    public IPresenter getPresenter() {
-        return fuliFragmentPresenter;
+    public List<IPresenter> getPresenter() {
+        List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(fuliFragmentPresenter);
+        return iPresenterList;
     }
 
     @Override

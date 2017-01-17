@@ -24,6 +24,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public static final String KEY_VIEW_MODEL = "BaseFragment.viewmodel";
     private BaseObservable baseObservable;
     private BaseActivityCallback baseActivityCallback;
+    private AttachPresenterHelper mAttachPresenterHelper;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,18 +40,16 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         if (savedInstanceState != null) {
             baseObservable = (BaseObservable) savedInstanceState.get(KEY_VIEW_MODEL);
         }
-     View view =   initBinding( inflater, container);
+        View view = initBinding(inflater, container);
         if (baseObservable != null) {
             initOldData(baseObservable);
         } else {
             initData();
         }
+        mAttachPresenterHelper = new AttachPresenterHelper(getPresenter());
         attachViewModel();
         initView(savedInstanceState);
-        if (getPresenter() != null) {
-            getPresenter().setCallback(baseActivityCallback);
-            getPresenter().onPresenterCreate(baseObservable == null);
-        }
+        mAttachPresenterHelper.initPresenter(baseObservable == null, baseActivityCallback);
         initListeners();
         return view;
     }
@@ -75,13 +74,12 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
 
     public void attachViewModel() {
-        if (getPresenter() != null && getViewModel() != null)
-            getPresenter().attachViewModel(getViewModel());
+        mAttachPresenterHelper.attachViewModel(getViewModel());
     }
 
     @Override
     public void onDestroy() {
-        if (getPresenter() != null) getPresenter().detachViewModel();
+        mAttachPresenterHelper.destroyPresenter();
         super.onDestroy();
     }
 
@@ -97,10 +95,11 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-        Log.d("tag","可见");
+            Log.d("tag", "可见");
         }
     }
-    public boolean isDarkTheme(){
+
+    public boolean isDarkTheme() {
         return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
     }
 }

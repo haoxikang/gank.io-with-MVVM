@@ -21,6 +21,9 @@ import com.fall.gank.viewmodel.HomeItemViewModel;
 import com.fall.gank.viewmodel.HomeViewModel;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 康颢曦 on 2016/11/27.
  */
@@ -82,10 +85,11 @@ public class HomeFragment extends BaseListFragment {
         homeViewModel = new HomeViewModel();
         initList();
     }
-
     @Override
-    public IPresenter getPresenter() {
-        return homeFragmentPresenter;
+    public List<IPresenter> getPresenter() {
+        List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(homeFragmentPresenter);
+        return iPresenterList;
     }
 
     @Override

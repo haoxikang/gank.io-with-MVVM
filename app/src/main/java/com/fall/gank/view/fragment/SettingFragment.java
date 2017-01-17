@@ -20,6 +20,9 @@ import com.fall.gank.presenter.SettingFragmentPresenter;
 import com.fall.gank.view.activity.CollectionActivity;
 import com.fall.gank.viewmodel.SettingViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by qqq34 on 2016/11/29.
  */
@@ -83,8 +86,10 @@ public class SettingFragment extends BaseFragment {
     }
 
     @Override
-    public IPresenter getPresenter() {
-        return mSettingFragmentPresenter;
+    public List<IPresenter> getPresenter() {
+        List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(mSettingFragmentPresenter);
+        return iPresenterList;
     }
 
     @Override

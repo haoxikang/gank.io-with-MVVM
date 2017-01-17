@@ -141,8 +141,10 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public IPresenter getPresenter() {
-        return mMainActivityPresenter;
+    public  List<IPresenter> getPresenter() {
+       List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(mMainActivityPresenter);
+        return iPresenterList;
     }
 
     @Override

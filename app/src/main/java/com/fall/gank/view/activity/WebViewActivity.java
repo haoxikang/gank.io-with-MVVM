@@ -26,6 +26,9 @@ import com.fall.gank.databinding.WebviewActivityBinding;
 import com.fall.gank.presenter.WebViewActivityPresenter;
 import com.fall.gank.viewmodel.WebViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by qqq34 on 2016/12/8.
  */
@@ -122,9 +125,12 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    public IPresenter getPresenter() {
-        return mPresenter;
+    public List<IPresenter> getPresenter() {
+        List<IPresenter> iPresenterList = new ArrayList<>();
+        iPresenterList.add(mPresenter);
+        return iPresenterList;
     }
+
 
     @Override
     public BaseObservable getViewModel() {

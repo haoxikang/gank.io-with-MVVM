@@ -21,10 +21,12 @@ import rx.Observable;
  * Created by qqq34 on 2016/11/24.
  */
 
-public abstract class BaseActivity extends PermissionAppCompatActivity implements BaseActivityCallback,BaseView {
+public abstract class BaseActivity extends PermissionAppCompatActivity implements BaseActivityCallback, BaseView {
     public static final String KEY_VIEW_MODEL = "BaseActivity.viewmodel";
     private View view;
     private BaseObservable baseObservable;
+    private AttachPresenterHelper mAttachPresenterHelper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +39,13 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
         } else {
             initData();
         }
-
+        mAttachPresenterHelper = new AttachPresenterHelper(getPresenter());
         attachViewModel();
         initToolbar(savedInstanceState);
         initView(savedInstanceState);
-        if (getPresenter() != null) getPresenter().setCallback(this);
-        view = findViewById(android.R.id.content);
         initListeners();
-        if (getPresenter() != null) {
-            getPresenter().onPresenterCreate(baseObservable == null);
-        }
+        mAttachPresenterHelper.initPresenter(baseObservable == null, this);
+
     }
 
     protected abstract void initBinding();
@@ -54,19 +53,16 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
 
     @Override
     protected void onDestroy() {
-        if (getPresenter() != null) getPresenter().detachViewModel();
+ mAttachPresenterHelper.destroyPresenter();
         super.onDestroy();
     }
-
 
 
     protected abstract void initToolbar(Bundle savedInstanceState);
 
 
-
     public void attachViewModel() {
-        if (getPresenter() != null && getViewModel() != null)
-            getPresenter().attachViewModel(getViewModel());
+   mAttachPresenterHelper.attachViewModel(getViewModel());
     }
 
     @Override
@@ -86,7 +82,8 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
         }
         super.onSaveInstanceState(outState);
     }
-public boolean isDarkTheme(){
-    return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-}
+
+    public boolean isDarkTheme() {
+        return AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
+    }
 }

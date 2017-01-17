@@ -4,6 +4,8 @@ import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * Created by 康颢曦 on 2016/11/27.
  */
@@ -18,7 +20,7 @@ public interface BaseView {
 
     void initData();
 
-    IPresenter getPresenter();
+   List<IPresenter>  getPresenter();
 
     BaseObservable getViewModel();
 
