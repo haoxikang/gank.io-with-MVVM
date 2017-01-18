@@ -5,7 +5,6 @@ import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 
@@ -13,8 +12,8 @@ import com.example.rxpermisson.PermissionAppCompatActivity;
 import com.fall.gank.callback.BaseActivityCallback;
 
 import java.io.Serializable;
-
-import rx.Observable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,10 +25,11 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
     private View view;
     private BaseObservable baseObservable;
     private AttachPresenterHelper mAttachPresenterHelper;
-
+    protected List<IPresenter> iPresenterList ;  //储存引用的所有presenter，一个界面可能会有多个Presenter的情况
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        iPresenterList = new ArrayList<>();
         if (savedInstanceState != null) {
             baseObservable = (BaseObservable) savedInstanceState.get(KEY_VIEW_MODEL);
         }
@@ -39,10 +39,11 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
         } else {
             initData();
         }
-        mAttachPresenterHelper = new AttachPresenterHelper(getPresenter());
+        mAttachPresenterHelper = new AttachPresenterHelper(iPresenterList);
         attachViewModel();
         initToolbar(savedInstanceState);
         initView(savedInstanceState);
+        view = findViewById(android.R.id.content);
         initListeners();
         mAttachPresenterHelper.initPresenter(baseObservable == null, this);
 
@@ -62,7 +63,7 @@ public abstract class BaseActivity extends PermissionAppCompatActivity implement
 
 
     public void attachViewModel() {
-   mAttachPresenterHelper.attachViewModel(getViewModel());
+   mAttachPresenterHelper.attachl();
     }
 
     @Override

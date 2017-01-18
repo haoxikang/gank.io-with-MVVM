@@ -1,16 +1,11 @@
 package com.fall.gank.presenter;
 
-import android.util.Log;
-
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.Utils.RxUtils;
-import com.fall.gank.core.BasePresenter;
+import com.fall.gank.core.BaseListPresenter;
 import com.fall.gank.database.Collection;
-import com.fall.gank.network.converter.ResultException;
 import com.fall.gank.network.model.impl.DataManager;
 import com.fall.gank.network.model.IDataManager;
-import com.fall.gank.network.model.IGankModel;
-import com.fall.gank.network.model.impl.GankModel;
 import com.fall.gank.viewmodel.ClassificationViewModel;
 import com.fall.gank.viewmodel.ClassificationItemViewModel;
 import com.google.gson.reflect.TypeToken;
@@ -23,12 +18,15 @@ import java.util.List;
  * Created by 康颢曦 on 2016/11/27.
  */
 
-public class ClassificationPresenter extends BasePresenter<ClassificationViewModel> {
+public class ClassificationPresenter extends BaseListPresenter<ClassificationItemViewModel, ClassificationViewModel> {
     private String KEY = "ClassificationPresenter.Key";
     private String type;
     private IDataManager mManager = new DataManager();
     private List<ClassificationItemViewModel> mList = new ArrayList<>();
-    private int page = 1;
+
+    public ClassificationPresenter(ClassificationViewModel listViewModel) {
+        super(listViewModel);
+    }
 
     @Override
     public void onPresenterCreate(boolean isNewCreate) {
@@ -50,26 +48,23 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                     .subscribe(classificationItemViewModels -> {
 
                         if (classificationItemViewModels.size() > 0) {
-                            getViewModel().setClassificationItemViewModelList(classificationItemViewModels);
-                            //     mAdapter.set(getViewModel().getHomeItemViewModelList());
-                            showList(getViewModel().getClassificationItemViewModelList());
-                            getViewModel().isDataEnable.set(true);
+                            listViewModel.setIVMs(classificationItemViewModels);
+                            //     mAdapter.set(listViewModel.getHomeItemViewModelList());
+                            showList(listViewModel.getIVMs());
+                            listViewModel.isDataEnable.set(true);
                         }
                     }, throwable -> getData(page), () -> getData(page)));
         } else {
-            page = getViewModel().getPage();
-            if (getViewModel().isRefresh.get()) {
+            page = listViewModel.getPage();
+            if (listViewModel.isRefresh.get()) {
                 getData(page);
             }
         }
     }
 
+    @Override
     public void getData(int page) {
-        if (page == 1) {
-            this.page = 1;
-        }
-        getViewModel().setPage(this.page);
-        getViewModel().isRefresh.set(true);
+        super.getData(page);
         mCompositeSubscription.add(mManager.getClassificationData(type, page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(classificationItemViewModel -> {
@@ -78,37 +73,18 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
                             }
 
                         }, throwable -> {
-                            getViewModel().isRefresh.set(false);
+                            listViewModel.isRefresh.set(false);
                             loadError(throwable);
                         }
                         , () -> {
-                            if (page == 1) {
-                                getViewModel().getClassificationItemViewModelList().clear();
-                            }
-                            getViewModel().getClassificationItemViewModelList().addAll(mList);
-                            mList.clear();
-                            getViewModel().isRefresh.set(false);
-                            showList(getViewModel().getClassificationItemViewModelList());
-                            if (page == 1) {
-                                mCompositeSubscription.add(Reservoir.putUsingObservable(KEY + type, getViewModel().getClassificationItemViewModelList())
-                                        .compose(RxUtils.applyIOToMainThreadSchedulers())
-                                        .subscribe(aBoolean -> {
-                                        }, throwable -> {
-                                        }));
-                            }
-                            getViewModel().isDataEnable.set(true);
-                            this.page++;
-                            getViewModel().setPage(this.page);
+                            loadDataComplete(mList);
                         }));
     }
 
-    public void loadNext() {
-        if (page == 1) page++;
-        if (!getViewModel().isRefresh.get()) {
-            getData(page);
-        } else return;
+    @Override
+    protected String getKey() {
+        return KEY+type;
     }
-
     public void setType(String type) {
         this.type = type;
     }

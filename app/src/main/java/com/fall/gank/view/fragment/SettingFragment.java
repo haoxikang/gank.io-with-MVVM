@@ -73,7 +73,8 @@ public class SettingFragment extends BaseFragment {
         mSettingViewModel = (SettingViewModel) baseObservable;
         mSettingViewModel.setDarkTheme(isDarkTheme());
         binding.setViewModel(mSettingViewModel);
-        mSettingFragmentPresenter = new SettingFragmentPresenter();
+        mSettingFragmentPresenter = new SettingFragmentPresenter(mSettingViewModel);
+        iPresenterList.add(mSettingFragmentPresenter);
     }
 
     @Override
@@ -81,16 +82,10 @@ public class SettingFragment extends BaseFragment {
 
         mSettingViewModel = new SettingViewModel(isDarkTheme());
         binding.setViewModel(mSettingViewModel);
-        mSettingFragmentPresenter = new SettingFragmentPresenter();
-
-    }
-
-    @Override
-    public List<IPresenter> getPresenter() {
-        List<IPresenter> iPresenterList = new ArrayList<>();
+        mSettingFragmentPresenter = new SettingFragmentPresenter(mSettingViewModel);
         iPresenterList.add(mSettingFragmentPresenter);
-        return iPresenterList;
     }
+
 
     @Override
     public BaseObservable getViewModel() {

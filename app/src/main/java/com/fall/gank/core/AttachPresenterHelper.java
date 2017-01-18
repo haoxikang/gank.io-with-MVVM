@@ -34,16 +34,16 @@ public class AttachPresenterHelper {
         if (mIPresenterList != null && mIPresenterList.size() > 0) {
             for (IPresenter iPresenter : mIPresenterList) {
                 if (iPresenter != null) {
-                    iPresenter.detachViewModel();
+                    iPresenter.detach();
                 }
             }
         }
     }
-    public void attachViewModel(BaseObservable  viewModel) {
+    public void attachl() {
         if (mIPresenterList != null && mIPresenterList.size() > 0) {
             for (IPresenter iPresenter : mIPresenterList) {
-                if (iPresenter != null && viewModel != null) {
-                    iPresenter.attachViewModel(viewModel);
+                if (iPresenter != null ) {
+                    iPresenter.attach();
                 }
             }
         }

@@ -6,4 +6,9 @@
           android:orderInCategory="100"
           android:icon="@null"
           app:showAsAction="never"/>
+    <item android:id="@+id/test"
+          android:title="多presenter测试"
+          android:orderInCategory="100"
+          android:icon="@null"
+          app:showAsAction="never"/>
 </menu>

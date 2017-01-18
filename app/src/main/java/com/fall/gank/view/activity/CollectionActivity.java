@@ -10,6 +10,8 @@ import com.fall.gank.R;
 import com.fall.gank.Utils.MDStatusBarCompat;
 import com.fall.gank.view.fragment.ClassificationFragment;
 
+import static com.fall.gank.view.fragment.ClassificationFragment.COLLECTION_TYPE;
+
 /**
  * Created by qqq34 on 2016/12/12.
  */
@@ -31,7 +33,7 @@ public class CollectionActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         if (mClassificationFragment==null){
-            mClassificationFragment = ClassificationFragment.newInstance("collection");
+            mClassificationFragment = ClassificationFragment.newInstance(COLLECTION_TYPE);
         }
         transaction.replace(R.id.container, mClassificationFragment);
         transaction.commit();

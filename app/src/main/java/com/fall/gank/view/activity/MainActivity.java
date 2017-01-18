@@ -18,6 +18,7 @@ import com.fall.gank.core.BaseActivity;
 import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.ActivityMainBinding;
 import com.fall.gank.presenter.MainActivityPresenter;
+import com.fall.gank.presenter.TestPresenter;
 import com.fall.gank.view.fragment.ClassificationFragment;
 import com.fall.gank.view.fragment.FuliFragment;
 import com.fall.gank.view.fragment.HomeFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
     private MainActivityPresenter mMainActivityPresenter;
     private List<Fragment> fragmentList;
     private ViewPagerAdapter viewPagerAdapter;
-
+private TestPresenter mTestPresenter;
     @Override
     public void initBinding() {
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
@@ -59,7 +60,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
         Toolbar toolbar = binding.toolbar;
-        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
 
@@ -120,6 +120,9 @@ public class MainActivity extends BaseActivity {
                 case R.id.go_github:
                  WebViewActivity.newIntent(MainActivity.this,"https://github.com/348476129/MVVM-framework");
                     break;
+                case R.id.test:
+                    mTestPresenter.onTextClick();
+                    break;
             }
             return true;
         });
@@ -129,23 +132,22 @@ public class MainActivity extends BaseActivity {
     public void initOldData(BaseObservable baseObservable) {
         mViewModel = (MainViewModel) baseObservable;
         binding.setMainViewModel(mViewModel);
-        mMainActivityPresenter = new MainActivityPresenter();
+        mMainActivityPresenter = new MainActivityPresenter(mViewModel);
+        mTestPresenter = new TestPresenter(mViewModel);
+        iPresenterList.add(mMainActivityPresenter);
+        iPresenterList.add(mTestPresenter);
     }
 
     @Override
     public void initData() {
-
         mViewModel = new MainViewModel(0);
         binding.setMainViewModel(mViewModel);
-        mMainActivityPresenter = new MainActivityPresenter();
+        mMainActivityPresenter = new MainActivityPresenter(mViewModel);
+        mTestPresenter = new TestPresenter(mViewModel);
+        iPresenterList.add(mMainActivityPresenter);
+        iPresenterList.add(mTestPresenter);
     }
 
-    @Override
-    public  List<IPresenter> getPresenter() {
-       List<IPresenter> iPresenterList = new ArrayList<>();
-        iPresenterList.add(mMainActivityPresenter);
-        return iPresenterList;
-    }
 
     @Override
     public BaseObservable getViewModel() {

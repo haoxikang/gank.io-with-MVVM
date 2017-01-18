@@ -4,8 +4,6 @@ import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,9 @@ public class ClassificationFragment extends BaseListFragment {
     private SingleTypeAdapter<ClassificationItemViewModel> mSingleTypeAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     public static String KEY = "ClassificationFragment.key";
-private ListLoadNextHelper listLoadNextHelper;
+    private ListLoadNextHelper listLoadNextHelper;
+    public static final String COLLECTION_TYPE = "collection";
+
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = FragmentClassificationBinding.inflate(inflater, container, false);
@@ -59,7 +59,7 @@ private ListLoadNextHelper listLoadNextHelper;
             WebViewActivity.newIntent(getContext(), classificationItemViewModel.url.get());
         });
 
-         listLoadNextHelper = new ListLoadNextHelper(binding.classificationList);
+        listLoadNextHelper = new ListLoadNextHelper(binding.classificationList);
         listLoadNextHelper.setListOffsetListener((lastOffset, position) -> {
             mClassificationViewModel.setLastOffset(lastOffset);
             mClassificationViewModel.setPosition(position);
@@ -81,9 +81,12 @@ private ListLoadNextHelper listLoadNextHelper;
     @Override
     public void initOldData(@Nullable BaseObservable baseObservable) {
         mClassificationViewModel = (ClassificationViewModel) baseObservable;
-
         initList();
+        mClassificationPresenter = new ClassificationPresenter(mClassificationViewModel);
         mClassificationPresenter.setType(mClassificationViewModel.getType());
+
+
+        iPresenterList.add(mClassificationPresenter);
     }
 
     @Override
@@ -92,15 +95,12 @@ private ListLoadNextHelper listLoadNextHelper;
         mClassificationViewModel.setType(getArguments().getString(KEY));
 
         initList();
+        mClassificationPresenter = new ClassificationPresenter(mClassificationViewModel);
         mClassificationPresenter.setType(mClassificationViewModel.getType());
+
+        iPresenterList.add(mClassificationPresenter);
     }
 
-    @Override
-    public List<IPresenter> getPresenter() {
-        List<IPresenter> iPresenterList = new ArrayList<>();
-        iPresenterList.add(mClassificationPresenter);
-        return iPresenterList;
-    }
 
     @Override
     public BaseObservable getViewModel() {
@@ -110,14 +110,14 @@ private ListLoadNextHelper listLoadNextHelper;
     private void initList() {
         mSingleTypeAdapter = new SingleTypeAdapter<>(getContext(), R.layout.view_classification_item);
         //     mClassificationViewModel.getClassificationItemViewModelList().add(new ClassificationItemViewModel("a","a","a","a",false));
-        if (mClassificationViewModel.getClassificationItemViewModelList().size() > 0) {
-            mSingleTypeAdapter.addAll(mClassificationViewModel.getClassificationItemViewModelList());
+        if (mClassificationViewModel.getIVMs().size() > 0) {
+            mSingleTypeAdapter.addAll(mClassificationViewModel.getIVMs());
         }
         binding.setAdapter(mSingleTypeAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         binding.setLayoutmanager(mLinearLayoutManager);
         binding.setViewmodel(mClassificationViewModel);
-        mClassificationPresenter = new ClassificationPresenter();
+
     }
 
     public static ClassificationFragment newInstance(String type) {

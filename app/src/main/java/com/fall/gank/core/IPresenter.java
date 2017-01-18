@@ -15,12 +15,10 @@ import rx.Observable;
  * Created by qqq34 on 2016/11/24.
  */
 
-public interface IPresenter<V extends BaseObservable> {
+public interface IPresenter {
      void onPresenterCreate(boolean isNewCreate);
-    void attachViewModel(V viewModel);
-    void detachViewModel();
-    boolean isViewModelAttached();
-     V getViewModel();
+    void attach();
+    void detach();
     void showSnakbar(String s);
     void startActivity(Intent intent);
     void setCallback(BaseActivityCallback baseActivityCallback);

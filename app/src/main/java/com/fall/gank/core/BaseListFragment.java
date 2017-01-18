@@ -15,8 +15,8 @@ public abstract class BaseListFragment extends BaseFragment implements BaseListC
 
     @Override
     public void initListeners() {
-        if (getPresenter()!=null&&getPresenter().size()>0){
-            for (IPresenter iPresenter:getPresenter()){
+        if (iPresenterList!=null&&iPresenterList.size()>0){
+            for (IPresenter iPresenter:iPresenterList){
                 if (iPresenter!=null){
                     iPresenter.setListCallback(this);
                 }

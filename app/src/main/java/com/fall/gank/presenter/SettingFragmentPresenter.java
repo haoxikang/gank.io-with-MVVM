@@ -14,9 +14,15 @@ import java.util.List;
  * Created by qqq34 on 2016/11/29.
  */
 
-public class SettingFragmentPresenter extends BasePresenter<SettingViewModel> {
+public class SettingFragmentPresenter extends BasePresenter {
     public static final  String SETTING_KEY = "setting_key";
     private SettingData mSettingData;
+    private SettingViewModel mSettingViewModel;
+
+    public SettingFragmentPresenter(SettingViewModel settingViewModel) {
+        mSettingViewModel = settingViewModel;
+    }
+
     @Override
     public void onPresenterCreate(boolean isNewCreate) {
     }
@@ -29,7 +35,6 @@ public class SettingFragmentPresenter extends BasePresenter<SettingViewModel> {
         }
         Reservoir.putUsingObservable(SETTING_KEY,mSettingData)
                 .subscribe(aBoolean -> {
-
                 },throwable -> {});
     }
 

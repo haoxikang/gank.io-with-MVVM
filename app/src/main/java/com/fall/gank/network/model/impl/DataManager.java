@@ -17,6 +17,8 @@ import java.util.List;
 
 import rx.Observable;
 
+import static com.fall.gank.view.fragment.ClassificationFragment.COLLECTION_TYPE;
+
 /**
  * Created by qqq34 on 2016/11/30.
  */
@@ -34,7 +36,7 @@ public class DataManager implements IDataManager {
     @Override
     public Observable<ClassificationItemViewModel> getClassificationData(String section, int page) {
         Observable<List<Collection>> observable;
-        if (section.equals("collection")) {
+        if (section.equals(COLLECTION_TYPE)) {
             observable = Observable.create(subscriber -> {
                 try {
                     if (page==1){

@@ -7,7 +7,13 @@ import com.fall.gank.viewmodel.WebViewModel;
  * Created by qqq34 on 2016/12/8.
  */
 
-public class WebViewActivityPresenter extends BasePresenter<WebViewModel> {
+public class WebViewActivityPresenter extends BasePresenter {
+    private WebViewModel mViewModel;
+
+    public WebViewActivityPresenter(WebViewModel viewModel) {
+        mViewModel = viewModel;
+    }
+
     @Override
     public void onPresenterCreate(boolean isNewCreate) {
 

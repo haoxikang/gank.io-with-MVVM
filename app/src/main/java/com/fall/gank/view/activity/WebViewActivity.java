@@ -113,23 +113,19 @@ public class WebViewActivity extends BaseActivity {
         mModel = (WebViewModel) baseObservable;
 
         mWebviewActivityBinding.setWebViewModel(mModel);
-        mPresenter = new WebViewActivityPresenter();
+        mPresenter = new WebViewActivityPresenter(mModel);
+        iPresenterList.add(mPresenter);
     }
 
     @Override
     public void initData() {
         mModel = new WebViewModel();
         mWebviewActivityBinding.setWebViewModel(mModel);
-        mPresenter = new WebViewActivityPresenter();
-
-    }
-
-    @Override
-    public List<IPresenter> getPresenter() {
-        List<IPresenter> iPresenterList = new ArrayList<>();
+        mPresenter = new WebViewActivityPresenter(mModel);
         iPresenterList.add(mPresenter);
-        return iPresenterList;
     }
+
+
 
 
     @Override

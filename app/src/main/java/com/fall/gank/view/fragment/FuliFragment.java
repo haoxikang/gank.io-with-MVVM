@@ -1,14 +1,9 @@
 package com.fall.gank.view.fragment;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,21 +74,19 @@ private  ListLoadNextHelper listLoadNextHelper;
     public void initOldData(@Nullable BaseObservable baseObservable) {
         fuliViewModel = (FuliViewModel) baseObservable;
         initList();
+        fuliFragmentPresenter = new FuliFragmentPresenter(fuliViewModel);
+        iPresenterList.add(fuliFragmentPresenter);
     }
 
     @Override
     public void initData() {
         fuliViewModel = new FuliViewModel();
-
         initList();
+        fuliFragmentPresenter = new FuliFragmentPresenter(fuliViewModel);
+        iPresenterList.add(fuliFragmentPresenter);
     }
 
-    @Override
-    public List<IPresenter> getPresenter() {
-        List<IPresenter> iPresenterList = new ArrayList<>();
-        iPresenterList.add(fuliFragmentPresenter);
-        return iPresenterList;
-    }
+
 
     @Override
     public BaseObservable getViewModel() {
@@ -102,14 +95,14 @@ private  ListLoadNextHelper listLoadNextHelper;
 
     private void initList() {
         mAdapter = new SingleTypeAdapter<>(getContext(), R.layout.view_image);
-        if (fuliViewModel.getImageItemViewModels().size() > 0) {
-            mAdapter.addAll(fuliViewModel.getImageItemViewModels());
+        if (fuliViewModel.getIVMs().size() > 0) {
+            mAdapter.addAll(fuliViewModel.getIVMs());
         }
         binding.setAdapter(mAdapter);
         mGridLayoutManager = new GridLayoutManager(getContext(), 2);
         binding.setLayoutmanager(mGridLayoutManager);
         binding.setViewmodel(fuliViewModel);
-        fuliFragmentPresenter = new FuliFragmentPresenter();
+
     }
 
 }

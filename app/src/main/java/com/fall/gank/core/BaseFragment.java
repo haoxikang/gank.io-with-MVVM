@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.fall.gank.callback.BaseActivityCallback;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 康颢曦 on 2016/11/27.
@@ -25,7 +27,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     private BaseObservable baseObservable;
     private BaseActivityCallback baseActivityCallback;
     private AttachPresenterHelper mAttachPresenterHelper;
-
+    protected List<IPresenter> iPresenterList ;  //储存引用的所有presenter，一个界面可能会有多个Presenter的情况
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        iPresenterList = new ArrayList<>();
         if (savedInstanceState != null) {
             baseObservable = (BaseObservable) savedInstanceState.get(KEY_VIEW_MODEL);
         }
@@ -46,7 +48,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         } else {
             initData();
         }
-        mAttachPresenterHelper = new AttachPresenterHelper(getPresenter());
+        mAttachPresenterHelper = new AttachPresenterHelper(iPresenterList);
         attachViewModel();
         initView(savedInstanceState);
         mAttachPresenterHelper.initPresenter(baseObservable == null, baseActivityCallback);
@@ -74,7 +76,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
 
     public void attachViewModel() {
-        mAttachPresenterHelper.attachViewModel(getViewModel());
+        mAttachPresenterHelper.attachl();
     }
 
     @Override

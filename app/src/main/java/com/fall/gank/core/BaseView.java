@@ -20,7 +20,8 @@ public interface BaseView {
 
     void initData();
 
-   List<IPresenter>  getPresenter();
+
+
 
     BaseObservable getViewModel();
 

@@ -27,23 +27,25 @@ public class RecyclerviewScrollHelper {
             LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 View leftView = manager.getChildAt(0);
-                int offset = leftView.getLeft();
-                int position = manager.findFirstVisibleItemPosition();
-                int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                int width = leftView.getWidth();
+                if (leftView != null) {
+                    int offset = leftView.getLeft();
+                    int position = manager.findFirstVisibleItemPosition();
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int width = leftView.getWidth();
 
-                if (offset==0){
-                    if (lastVisibleItem == manager.getItemCount()-1) {
-                        if (mOnScrollLastListener!=null){
-                            mOnScrollLastListener.onScrollLast();
+                    if (offset == 0) {
+                        if (lastVisibleItem == manager.getItemCount() - 1) {
+                            if (mOnScrollLastListener != null) {
+                                mOnScrollLastListener.onScrollLast();
+                            }
                         }
+                        return;
                     }
-                    return;
-                }
-                if (Math.abs(offset) > width / 2) {
-                    recyclerView.smoothScrollToPosition(position + 1);
-                } else if (Math.abs(offset) < width / 2){
-                    recyclerView.smoothScrollToPosition(position);
+                    if (Math.abs(offset) > width / 2) {
+                        recyclerView.smoothScrollToPosition(position + 1);
+                    } else if (Math.abs(offset) < width / 2) {
+                        recyclerView.smoothScrollToPosition(position);
+                    }
                 }
 
 

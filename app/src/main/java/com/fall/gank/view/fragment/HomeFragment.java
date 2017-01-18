@@ -62,12 +62,12 @@ public class HomeFragment extends BaseListFragment {
     public void initListeners() {
         super.initListeners();
         mRecyclerviewScrollHelper.setOnScrollLastListener(() -> {
-            if (homeViewModel.isDataEnable()) {
+            if (homeViewModel.isDataEnable.get()) {
                 homeFragmentPresenter.loadNext();
             }
         });
 
-        binding.setRefreshListener(() -> homeFragmentPresenter.getHomeData(1));
+        binding.setRefreshListener(() -> homeFragmentPresenter.getData(1));
         mHomeItemViewModelSingleTypeAdapter.setPresenter((SingleTypeAdapter.Presenter<HomeItemViewModel>) homeItemViewModel -> {
 
         });
@@ -76,37 +76,36 @@ public class HomeFragment extends BaseListFragment {
 
     @Override
     public void initOldData(@Nullable BaseObservable baseObservable) {
+
         homeViewModel = (HomeViewModel) baseObservable;
+        homeFragmentPresenter = new HomeFragmentPresenter(homeViewModel);
         initList();
+        iPresenterList.add(homeFragmentPresenter);
     }
 
     @Override
     public void initData() {
+
         homeViewModel = new HomeViewModel();
+        homeFragmentPresenter = new HomeFragmentPresenter(homeViewModel);
         initList();
-    }
-    @Override
-    public List<IPresenter> getPresenter() {
-        List<IPresenter> iPresenterList = new ArrayList<>();
         iPresenterList.add(homeFragmentPresenter);
-        return iPresenterList;
     }
+
 
     @Override
     public BaseObservable getViewModel() {
         return homeViewModel;
     }
-
     private void initList() {
         mHomeItemViewModelSingleTypeAdapter = new SingleTypeAdapter<>(getContext(), R.layout.view_home_item);
-        if (homeViewModel.getHomeItemViewModelList().size() > 0) {
-            mHomeItemViewModelSingleTypeAdapter.addAll(homeViewModel.getHomeItemViewModelList());
+        if (homeViewModel.getIVMs().size() > 0) {
+            mHomeItemViewModelSingleTypeAdapter.addAll(homeViewModel.getIVMs());
         }
         binding.setAdapter(mHomeItemViewModelSingleTypeAdapter);
         mLinearLayoutManager = new SlowlyScrollLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.setLayoutmanager(mLinearLayoutManager);
         binding.setViewmodel(homeViewModel);
-        homeFragmentPresenter = new HomeFragmentPresenter();
     }
 
     @Override

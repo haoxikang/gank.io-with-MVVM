@@ -3,6 +3,7 @@ package com.fall.gank.Utils;
 import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -71,5 +72,10 @@ public class BindingUtils {
     @BindingAdapter("webview_url")
     public static void setWebUrl(final WebView webView, String url) {
         webView.loadUrl(url);
+    }
+
+    @BindingAdapter("toolbar_title")
+    public static void setTitle(final Toolbar toolbar, String s){
+        toolbar.setTitle(s);
     }
 }

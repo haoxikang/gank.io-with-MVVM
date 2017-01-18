@@ -18,8 +18,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by qqq34 on 2016/11/24.
  */
 
-public abstract class BasePresenter<T extends BaseObservable> implements IPresenter<T> {
-    private T mViewModel;
+public abstract class BasePresenter implements IPresenter {
     private BaseActivityCallback callback;
     private BaseListCallback mBaseListCallback;
     public CompositeSubscription mCompositeSubscription;
@@ -29,31 +28,23 @@ public abstract class BasePresenter<T extends BaseObservable> implements IPresen
         callback = baseActivityCallback;
     }
 
+
+
     @Override
-    public void attachViewModel(T viewModel) {
-        mViewModel = viewModel;
+    public void attach() {
         mCompositeSubscription = new CompositeSubscription();
     }
 
     @Override
-    public void detachViewModel() {
-        mViewModel = null;
+    public void detach() {
         mCompositeSubscription.unsubscribe();
         mCompositeSubscription = null;
         callback = null;
         mBaseListCallback = null;
-        Log.d("tag", "on detachViewModel executed");
+        Log.d("tag", "on detach executed");
     }
 
-    @Override
-    public T getViewModel() {
-        return mViewModel;
-    }
 
-    @Override
-    public boolean isViewModelAttached() {
-        return mViewModel != null;
-    }
 
     @Override
     public void showSnakbar(String s) {

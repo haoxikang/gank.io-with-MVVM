@@ -45,15 +45,6 @@
         <activity
             android:name=".view.activity.PhotoActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.PreservedActivity1"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.PreservedActivity2"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.PreservedActivity3"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
