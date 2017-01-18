@@ -19,6 +19,7 @@ import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.ActivityMainBinding;
 import com.fall.gank.presenter.MainActivityPresenter;
 import com.fall.gank.presenter.TestPresenter;
+import com.fall.gank.presenter.factory.PresenterFactory;
 import com.fall.gank.view.fragment.ClassificationFragment;
 import com.fall.gank.view.fragment.FuliFragment;
 import com.fall.gank.view.fragment.HomeFragment;
@@ -133,7 +134,7 @@ private TestPresenter mTestPresenter;
         mViewModel = (MainViewModel) baseObservable;
         binding.setMainViewModel(mViewModel);
         mMainActivityPresenter = new MainActivityPresenter(mViewModel);
-        mTestPresenter = new TestPresenter(mViewModel);
+        mTestPresenter = new PresenterFactory().getTextPresenter(mViewModel);
         iPresenterList.add(mMainActivityPresenter);
         iPresenterList.add(mTestPresenter);
     }
@@ -143,7 +144,7 @@ private TestPresenter mTestPresenter;
         mViewModel = new MainViewModel(0);
         binding.setMainViewModel(mViewModel);
         mMainActivityPresenter = new MainActivityPresenter(mViewModel);
-        mTestPresenter = new TestPresenter(mViewModel);
+        mTestPresenter = new PresenterFactory().getTextPresenter(mViewModel);
         iPresenterList.add(mMainActivityPresenter);
         iPresenterList.add(mTestPresenter);
     }
