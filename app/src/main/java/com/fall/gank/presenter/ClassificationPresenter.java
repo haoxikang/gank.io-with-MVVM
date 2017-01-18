@@ -79,11 +79,7 @@ public class ClassificationPresenter extends BasePresenter<ClassificationViewMod
 
                         }, throwable -> {
                             getViewModel().isRefresh.set(false);
-                            if (throwable instanceof ResultException) {
-                                showSnakbar("数据错误");
-                            } else {
-                                showSnakbar("连接失败，请重试");
-                            }
+                            loadError(throwable);
                         }
                         , () -> {
                             if (page == 1) {

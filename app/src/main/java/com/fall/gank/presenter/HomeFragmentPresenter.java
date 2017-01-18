@@ -89,11 +89,7 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
 
                 }, throwable -> {
                     getViewModel().isRefresh.set(false);
-                    if (throwable instanceof ResultException) {
-                        showSnakbar("数据错误");
-                    } else {
-                        showSnakbar("连接失败，请重试");
-                    }
+                    loadError(throwable);
                 }, () -> {
                     if (page == 1) {
                         getViewModel().getHomeItemViewModelList().clear();
@@ -114,7 +110,7 @@ public class HomeFragmentPresenter extends BasePresenter<HomeViewModel> {
                     getViewModel().setPage(this.page);
                 }));
     }
-                                                                     
+
     public void loadNext() {
         if (page == 1) page++;
         if (!getViewModel().isRefresh.get()) {

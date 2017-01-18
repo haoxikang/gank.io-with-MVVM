@@ -18,9 +18,9 @@ import rx.subscriptions.CompositeSubscription;
  * Created by qqq34 on 2016/11/24.
  */
 
-public abstract class BasePresenter<T extends BaseObservable>implements IPresenter<T> {
+public abstract class BasePresenter<T extends BaseObservable> implements IPresenter<T> {
     private T mViewModel;
-private BaseActivityCallback callback;
+    private BaseActivityCallback callback;
     private BaseListCallback mBaseListCallback;
     public CompositeSubscription mCompositeSubscription;
 
@@ -40,15 +40,16 @@ private BaseActivityCallback callback;
         mViewModel = null;
         mCompositeSubscription.unsubscribe();
         mCompositeSubscription = null;
-        callback =null;
-        mBaseListCallback=null;
-        Log.d("tag","on detachViewModel executed");
+        callback = null;
+        mBaseListCallback = null;
+        Log.d("tag", "on detachViewModel executed");
     }
 
     @Override
     public T getViewModel() {
         return mViewModel;
     }
+
     @Override
     public boolean isViewModelAttached() {
         return mViewModel != null;
@@ -56,21 +57,21 @@ private BaseActivityCallback callback;
 
     @Override
     public void showSnakbar(String s) {
-if (callback!=null){
-    callback.onShowSnackBar(s);
-}
+        if (callback != null) {
+            callback.onShowSnackBar(s);
+        }
     }
 
     @Override
     public void startActivity(Intent intent) {
-        if (callback!=null){
+        if (callback != null) {
             callback.onStartActivity(intent);
         }
     }
 
     @Override
-    public void  showList(List list) {
-        if (mBaseListCallback!=null){
+    public void showList(List list) {
+        if (mBaseListCallback != null) {
             mBaseListCallback.onListLoadFinished(list);
         }
     }
@@ -82,9 +83,18 @@ if (callback!=null){
 
     @Override
     public Observable<Boolean> checkPermission(int resString, String... mPerms) {
-        if (callback!=null){
-            return callback.checkPermission(resString,mPerms);
+        if (callback != null) {
+            return callback.checkPermission(resString, mPerms);
         }
         return null;
     }
+
+    public void loadError(Throwable throwable) {
+        if (throwable instanceof ResultException) {
+            showSnakbar("数据错误");
+        } else {
+            showSnakbar("连接失败，请重试");
+        }
+    }
+
 }
