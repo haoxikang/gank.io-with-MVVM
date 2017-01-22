@@ -2,6 +2,7 @@ package com.fall.gank.Utils;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -25,6 +26,7 @@ public class ListLoadNextHelper {
     public ListLoadNextHelper(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            boolean isSlidingToLast = false;
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -40,7 +42,7 @@ public class ListLoadNextHelper {
 
 
                         int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                        if (lastVisibleItem == manager.getItemCount() - 1) {
+                        if (lastVisibleItem ==( manager.getItemCount() - 1)&&isSlidingToLast) {
                             if (mScrollLastListener!=null){
                                 mScrollLastListener.onScrollLast();
                             }
@@ -54,6 +56,11 @@ public class ListLoadNextHelper {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                if(dy> 0){
+                    isSlidingToLast = true;
+                }else{
+                    isSlidingToLast = false;
+                }
             }
         });
     }

@@ -84,6 +84,7 @@ protected  T listViewModel;
 
 
     public void loadNext() {
+        Log.d("next"," ");
         if (page == 1) page++;
         if (!listViewModel.isRefresh.get()) {
             getData(page);

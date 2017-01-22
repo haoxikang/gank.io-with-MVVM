@@ -3,8 +3,6 @@ package com.fall.gank;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 

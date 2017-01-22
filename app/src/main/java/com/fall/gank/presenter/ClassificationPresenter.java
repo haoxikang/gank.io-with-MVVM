@@ -1,5 +1,7 @@
 package com.fall.gank.presenter;
 
+import android.util.Log;
+
 import com.anupcowkur.reservoir.Reservoir;
 import com.fall.gank.Utils.RxUtils;
 import com.fall.gank.core.BaseListPresenter;
@@ -65,6 +67,7 @@ public class ClassificationPresenter extends BaseListPresenter<ClassificationIte
     @Override
     public void getData(int page) {
         super.getData(page);
+        Log.d("page",page+"");
         mCompositeSubscription.add(mManager.getClassificationData(type, page)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(classificationItemViewModel -> {

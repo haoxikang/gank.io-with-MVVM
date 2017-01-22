@@ -1,6 +1,5 @@
 package com.fall.gank.view.activity;
 
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,13 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.Toast;
-
 import com.fall.gank.R;
 import com.fall.gank.Utils.MDStatusBarCompat;
 import com.fall.gank.adapter.ViewPagerAdapter;
 import com.fall.gank.core.BaseActivity;
-import com.fall.gank.core.IPresenter;
 import com.fall.gank.databinding.ActivityMainBinding;
 import com.fall.gank.presenter.MainActivityPresenter;
 import com.fall.gank.presenter.TestPresenter;
@@ -36,7 +32,9 @@ public class MainActivity extends BaseActivity {
     private MainActivityPresenter mMainActivityPresenter;
     private List<Fragment> fragmentList;
     private ViewPagerAdapter viewPagerAdapter;
-private TestPresenter mTestPresenter;
+    private TestPresenter mTestPresenter;
+
+
     @Override
     public void initBinding() {
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
@@ -47,7 +45,7 @@ private TestPresenter mTestPresenter;
         MDStatusBarCompat.setOrdinaryToolBar(this);
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add( ClassificationFragment.newInstance("Android"));
+        fragmentList.add(ClassificationFragment.newInstance("Android"));
         fragmentList.add(ClassificationFragment.newInstance("iOS"));
         fragmentList.add(ClassificationFragment.newInstance("前端"));
         fragmentList.add(new FuliFragment());
@@ -66,6 +64,8 @@ private TestPresenter mTestPresenter;
 
     @Override
     public void initListeners() {
+
+
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -119,7 +119,7 @@ private TestPresenter mTestPresenter;
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.go_github:
-                 WebViewActivity.newIntent(MainActivity.this,"https://github.com/348476129/MVVM-framework");
+                    WebViewActivity.newIntent(MainActivity.this, "https://github.com/348476129/MVVM-framework");
                     break;
                 case R.id.test:
                     mTestPresenter.onTextClick();
@@ -147,6 +147,7 @@ private TestPresenter mTestPresenter;
         mTestPresenter = new PresenterFactory().getTextPresenter(mViewModel);
         iPresenterList.add(mMainActivityPresenter);
         iPresenterList.add(mTestPresenter);
+
     }
 
 
@@ -160,4 +161,5 @@ private TestPresenter mTestPresenter;
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
+
 }

@@ -2,9 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply from: 'tinkerpatch.gradle'
 
-
 android {
-
+    packagingOptions{
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
     signingConfigs {
         config {
             keyAlias 'fall'
